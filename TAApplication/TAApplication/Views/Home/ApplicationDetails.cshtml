@@ -1,0 +1,176 @@
+﻿<!--
+  Author:    Sebastian Ramirez
+  Partner:   Noah Carlson
+  Date:      Sept 8, 2022
+  Course:    CS 4540, University of Utah, School of Computing
+  Copyright: CS 4540 and Noah Carlson, Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
+  I, Sebastian Ramirez and Noah Carlson, certify that I wrote this code from scratch and did not copy it in part or whole from
+  another source.  Any references used in the completion of the assignment are cited in my README file.
+  File Contents
+     This file contains the HTML for the home page of the TA application website, and also
+     contains a general format to be fine tuned by Site.css
+-->
+
+<div id="Application-page-title-wrapper">
+    <h1 id="Application-page-title">(User)'s Application</h1>
+</div>
+<div id="header-bar"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <img src="default_pfp.png" alt="User's self portrait" id="user_portrait" />
+            <div class="row">
+                <div class="col-lg-6">
+                    <b id="name-label">Name:</b>
+                </div>
+                <div class="col-lg-6">
+                    <p id="name-response">User</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <b id="pronouns-label">Personal Pronouns:</b>
+                </div>
+                <div class="col-lg-6">
+                    <p id="pronouns-response">He/Him</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <b id="phone-number-label">Phone Number:</b>
+                </div>
+                <div class="col-lg-6 data-field-col">
+                    <p id="phone-number-response">801-555-1234</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <b id="email-label">Email:</b>
+                </div>
+                <div class="col-lg-6 data-field-col">
+                    <p id="email-response">u1234567@utah.edu</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <b id="address-label">Local Address:</b>
+                </div>
+                <div class="col-lg-6 data-field-col">
+                    <p id="address-response">201 Presidents' Cir, Salt Lake City, UT 84112</p>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-lg-6">
+            <form>
+                <div id="application-container" class="container">
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="pos-sought" class="form-label">Position sought:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="pos-sought">Senior TA</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="degree-pursuing" class="form-label">Degree Being Pursued:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="degree-pursuing">BS</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="degree-dept" class="form-label">Degree Department:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="degree-dept">CS</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="utah-semesters" class="form-label">Semesters Completed at Utah:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="utah-semesters">Senior TA</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="availability" class="form-label">Available the Week Before:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="availability">8/14/22-8/22/22</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="academic-record-permission" class="form-label">Permission to View Academic Record?:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="academic-record-permission">Yes</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="teaching-experience" class="form-label">Previous Experience Teaching?:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="teaching-experience">No</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="max-weekly-hours" class="form-label">Maximum Weekly Work Hours:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="max-weekly-hours">20</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="u-gpa" class="form-label">U of U GPA:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="u-gpa">4.0</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="personal-statement" class="form-label">Personal Statement:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="personal-statement">Lorem ipsum dolor sit amet, nec persius impedit omittantur et. Feugiat offendit ea ius, alia probatus pertinacia has cu. Ei vix reque populo, ne usu aliquam disputando. Atqui congue aperiri his te. Te sumo admodum nec, duis pericula sed ex.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="previous-university" class="form-label">Previous University?:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="previous-university">N/A</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="english-fluency" class="form-label">Fluency in English:</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <p id="english-fluency">Yes</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 prompt-label">
+                            <label for="linkedin" class="form-label">LinkedIn URL (optional):</label>
+                        </div>
+                        <div class="col-lg-7 data-field-col">
+                            <a href="https://www.linkedin.com/" id="linkedin">To LinkedIn</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+﻿<div class="container">
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-lg-8 mx-auto">
+                <h1 class="fw-light">Current Applicants</h1>
+                <p class="lead text-muted">View applicants below, click on each applicant to view full application</p>
+                <div id="columns">
+                    <div class="Info-Column" id="Info-label">
+                        <h2 id="hiring-stats-header">
+                            Hiring Statistics
+                        </h2>
+                        <ul id="stats-list">
+                            <li id="amnt-of-applicants">Students Applied: 2</li>
+                            <li id="amnt-hired">Students Hired: 1</li>
+                            <li id="amnt-needed">Students Needed: 1</li>
+                        </ul>
+                    </div>
+                    <div class="Info-Column" id="Info-image">
+                        <img id="stats-chart" src="Sample_Pie_Chart.png" alt="Pie Chart of Statistics" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <table id="applicants-table" class="table table-striped">
+        <thead>
+            <tr class="applicants-header-row">
+                <th scope="col" class="applicants-header-data">Name</th>
+                <th scope="col" class="applicants-header-data">Current Position</th>
+                <th scope="col" class="applicants-header-data">GPA</th>
+                <th scope="col" class="applicants-header-data">Degree Pursuing</th>
+                <th scope="col" class="applicants-header-data">Department</th>
+                <th scope="col" class="applicants-header-data">Previous Reviews</th>
+                <th scope="col" class="applicants-header-data">Last Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="applicant-name">
+                    <a class="table-link" asp-area="" asp-controller="Home" asp-action="ApplicationDetails">Roger Higgins</a>
+                </td>
+                <td class="applicant-assignment">No Assignment</td>
+                <td class="applicant-GPA">3.0</td>
+                <td class="applicant-degree">B.S</td>
+                <td class="applicant-department">CS</td>
+                <td class="applicant-rating">OK</td>
+                <td class="applicant-last-updated">Aug 2, 2022</td>
+
+            </tr>
+            <tr>
+                <td class="applicant-name">Noah</td>
+                <td class="applicant-assignment">3500</td>
+                <td class="applicant-GPA">3.0</td>
+                <td class="applicant-degree">B.S</td>
+                <td class="applicant-department">CS</td>
+                <td class="applicant-rating">OK</td>
+                <td class="applicant-last-updated">Aug 2, 2022</td>
+            </tr>
+            <tr>
+                <td class="applicant-name">Sebastian</td>
+                <td class="applicant-assignment">2420</td>
+                <td class="applicant-GPA">3.0</td>
+                <td class="applicant-degree">B.S</td>
+                <td class="applicant-department">CS</td>
+                <td class="applicant-rating">OK</td>
+                <td class="applicant-last-updated">Aug 2, 2022</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

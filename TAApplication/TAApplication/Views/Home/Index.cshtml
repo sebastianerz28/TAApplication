@@ -2,7 +2,64 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container py-4">
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+            <div class="row ">
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold">TA Application</h1>
+                    <p class="col-lg-8 fs-4">
+                        Teaching Assistants and Mentees make a huge difference in the lives of students. Many of you are here applying to TA because you were inspired by a past TA. Maybe next year a student will choose to "pay it forward" because of your efforts.
+                    </p>
+                    <a class="btn btn-lg bg-danger btn-primary" href="/ApplicationCreate.html" role="button">Start</a>
+                </div>
+                <div class="col-lg-6" id="ta-app-img">
+                    <img class="img-fluid" src="teachingAssistants.jpg" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row align-items-md-stretch">
+        <div class="col-lg-6">
+            <div class="h-100 p-5 text-white bg-danger rounded-3">
+                <div class="container">
+                    <h2 id="TA-of-the-year-header">TA of The Year!</h2>
+                    <div class="row">
+                        <div class="col center">
+                            <div id="TA-winner">
+                                <h3 id="TA-winner-name">Jenny Pronto</h3>
+                                <p id="TA-winner-description">This is her 20th year in a row of winning TA of the year!</p>
+                                <button class="btn btn-outline-light" type="button" id="TA-description-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <img class="img-fluid" src="TA_winner.jpg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="h-100 p-5 bg-danger text-white border rounded-3">
+                <h2>FAQ</h2>
+                <div class="row">
+                    <div class="col center">
+                        <div id="FAQ-box">
+                            <p id="TA-FAQ-description">Becoming a TA can prompt a lot of questions, Mary Kate Cologna answers some common questions in the link below.</p>
+                            <button class="btn btn-outline-light" type="button">Learn More</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img class="img-fluid" src="TA-FAQ.jpg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="pt-3 mt-4 text-muted border-top">
+        © 2022
+    </footer>
 </div>

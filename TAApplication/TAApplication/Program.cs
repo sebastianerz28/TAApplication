@@ -24,7 +24,7 @@ using (var scope = app.Services.CreateScope())
     var DB = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var um = scope.ServiceProvider.GetRequiredService<UserManager<TAUser>>();
     var rm = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
+    DB.Database.Migrate();
     await DB.InitializeUsers(um, rm);
 }
 

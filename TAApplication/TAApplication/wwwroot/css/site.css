@@ -1,18 +1,52 @@
-html {
-  font-size: 14px;
+/*
+  Author:    Sebastian Ramirez
+  Partner:   Noah Carlson
+  Date:      Sept 8, 2022
+  Course:    CS 4540, University of Utah, School of Computing
+  Copyright: CS 4540 and Noah Carlson, Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
+ 
+  I, Sebastian Ramirez and Noah Carlson, certify that I wrote this code from scratch and did not copy it in part or whole from 
+  another source.  Any references used in the completion of the assignment are cited in my README file.
+ 
+  File Contents
+ 
+     This file contains styling for elements found in Index.html Along with common elements between all webpages.
+*/
+
+.navcolor {
+    background-color: #372C2C;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.red {
+    background-color: orangered;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
-body {
-  margin-bottom: 60px;
+#acc-dropdown {
+    margin-right: 50px
+}
+
+#BlockU-Nav {
+    height: 30px;
+    width: 30px;
+}
+
+#ta-app-img {
+    margin-top: 5%;
+    margin-bottom: 5%
+}
+
+#page-image {
+    width: 100%;
+    height: 100%;
+}
+
+#TA-winner-name {
+    text-decoration: underline;
 }

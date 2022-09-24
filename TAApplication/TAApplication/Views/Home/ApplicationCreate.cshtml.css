@@ -1,0 +1,77 @@
+﻿/*
+Author:    Noah Carlson
+Partner:   Sebastian Ramirez
+Date:      Sept 8, 2022
+Course:    CS 4540, University of Utah, School of Computing
+Copyright: CS 4540 and Noah Carlson and Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
+I, Noah Carlson and Sebastian Ramirez, certify that I wrote this code from scratch and did not copy it in part or whole from
+another source. Any references used in the completion of the assignment are cited in my README file.
+File Contents
+CSS styling for the TA Application page which is a part of the TA Application website. Adds the styles to ApplicationCreate.html.
+*/
+
+body {
+}
+
+.container {
+    width: 100%;
+}
+
+.prompt-label {
+    text-align: center;
+    padding-top: 7px;
+}
+
+.data-field {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.data-field-col {
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+}
+
+.row {
+    justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#Application-page-title {
+    text-align: center;
+}
+
+#application-submit-button-wrapper {
+    text-align: center;
+    padding: 10px;
+}
+
+#degree-dropdown {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#header-bar {
+    width: 100%;
+    height: 15px;
+    background-color: red;
+    margin-bottom: 10px;
+}
+
+#application-description {
+    text-align: center;
+    text-decoration: underline;
+    font-weight: normal;
+}
+
+#selfportrait {
+    display: block;
+    margin-left: 10%;
+    margin-right: auto;
+}

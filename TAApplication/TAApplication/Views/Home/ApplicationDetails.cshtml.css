@@ -1,0 +1,54 @@
+﻿/*
+Author:    Noah Carlson
+Partner:   Sebastian Ramirez
+Date:      Sept 8, 2022
+Course:    CS 4540, University of Utah, School of Computing
+Copyright: CS 4540 and Noah Carlson and Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
+I, Noah Carlson and Sebastian Ramirez, certify that I wrote this code from scratch and did not copy it in part or whole from
+another source. Any references used in the completion of the assignment are cited in my README file.
+File Contents
+CSS styling for the TA Application Details page which is a part of the TA Application website. Adds the styles to ApplicationDetails.html.
+*/
+
+.response-label {
+    text-align: center;
+    font-weight: bold;
+}
+
+.response-input {
+    text-align: left;
+}
+
+#Application-page-title {
+    text-align: center;
+}
+
+#user_portrait {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.row {
+    justify-content: center;
+}
+
+.prompt-label {
+    background-color: rgb(217 82 82);
+}
+
+.form-label {
+    color: white;
+}
+
+#header-bar {
+    width: 100%;
+    height: 15px;
+    background-color: red;
+    margin-bottom: 10px;
+}

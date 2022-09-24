@@ -1,0 +1,197 @@
+﻿<!--
+  Author:    Sebastian Ramirez
+  Partner:   Noah Carlson
+  Date:      Sept 8, 2022
+  Course:    CS 4540, University of Utah, School of Computing
+  Copyright: CS 4540 and Noah Carlson, Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
+  I, Sebastian Ramirez and Noah Carlson, certify that I wrote this code from scratch and did not copy it in part or whole from
+  another source.  Any references used in the completion of the assignment are cited in my README file.
+  File Contents
+     This file contains the HTML for the home page of the TA application website, and also
+     contains a general format to be fine tuned by Site.css
+-->
+
+
+<div id="Application-page-title-wrapper">
+    <h1 id="Application-page-title">TA Application</h1>
+</div>
+<div id="header-bar"></div>
+<h4 id="application-description" class="text-muted">Please fill out the application and click submit when finished.</h4>
+<form>
+    <div id="application-container" class="container">
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="applicant-name" class="form-label">Name:</label>
+            </div>
+            <div class="col-lg-3 data-field-col ">
+                <input type="text" id="applicant-name" class="form-control data-field" placeholder="Name" aria-label="Name" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter Full Name here">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="pronouns" class="form-label">Personal Pronouns:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="pronouns" class="form-control data-field" placeholder="he/him, she/hers, etc." aria-label="Pronouns" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter preferred pronouns">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="phone-number" class="form-label">Phone Number:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="phone-number" class="form-control data-field" placeholder="Phone Number" aria-label="Phone Number" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter phone number with area code">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="email-address" class="form-label">Email Address:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="email-address" class="form-control data-field" placeholder="Email" aria-label="Email Address" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter best email to reach you">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="local-address" class="form-label">Local Address:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="local-address" class="form-control data-field" placeholder="Address" aria-label="Local Address" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter local address">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="pos-sought" class="form-label">Position sought:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="pos-sought" class="form-control data-field" placeholder="Position" aria-label="Position sought" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Position applying for e.g.: Senior TA">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="degree-pursuing" class="form-label">Degree Being Pursued:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <select id="degree-dropdown" class="form-select data-field" aria-label="choose degree dropdown" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Select the closest to your actual degree">
+                    <option selected>Choose degree:</option>
+                    <option value="1">Bachelors</option>
+                    <option value="2">Masters</option>
+                    <option value="3">Doctorate</option>
+                    <option value="4">Other</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="degree-dept" class="form-label">Degree Department:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="degree-dept" class="form-control data-field" placeholder="Department" aria-label="Degree Department" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter department abbreviation">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="utah-semesters" class="form-label">Semesters Completed at Utah:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="utah-semesters" class="form-control data-field" placeholder="Amount of Semesters" aria-label="Semesters at Utah" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter a number">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="availability" class="form-label">Available the Week Before:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="availability" class="form-control data-field" placeholder="Dates" aria-label="Available the Week Before" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter the dates before the semester starts">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="academic-record-permission" class="form-label">Permission to View Academic Record?</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <div class="form-check center">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Select check for yes">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Yes/No
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="teaching-experience" class="form-label">Previous Experience Teaching:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="teaching-experience" class="form-control data-field" placeholder="Teaching Experience" aria-label="Previous Experience Teaching" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter any previous experience">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="max-weekly-hours" class="form-label">Maximum Weekly Work Hours:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="max-weekly-hours" class="form-control data-field" placeholder="Hours" aria-label="Maximum Weekly Work Hours" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter a number">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="u-gpa" class="form-label">Courses interested in:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="u-gpa" class="form-control data-field" placeholder="1410, 2420, 3500, etc." aria-label="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter a number seperated by a comma">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="u-gpa" class="form-label">U of U GPA:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="u-gpa" class="form-control data-field" placeholder="GPA" aria-label="U of U GPA" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter a number">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="personal-statement" class="form-label">Personal Statement:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <textarea class="form-control data-field" id="personal-statement" rows="3" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter plaintext"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="previous-university" class="form-label">Previous University:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="previous-university" class="form-control data-field" placeholder="None" aria-label="Previous University" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter N/A if this does not apply">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="english-fluency" class="form-label">Fluency in English:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="english-fluency" class="form-control data-field" placeholder="Native" aria-label="Fluency in English" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Yes/No">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="linkedin" class="form-label">LinkedIn URL (optional):</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input type="text" id="linkedin" class="form-control data-field" placeholder="" aria-label="LinkedIn URL" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Enter full link">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 prompt-label">
+                <label for="selfportrait" class="form-label">Self-portrait:</label>
+            </div>
+            <div class="col-lg-3 data-field-col">
+                <input class="form-control" type="file" id="formFile">
+            </div>
+        </div>
+    </div>
+</form>
+<div id="application-submit-button-wrapper">
+    <button type="button" class="btn btn-danger btn-sm" id="application-submit-button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="This application cannot be edited!">Submit</button>
+</div>
