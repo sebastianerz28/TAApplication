@@ -16,7 +16,6 @@ builder.Services.AddDefaultIdentity<TAUser>(options => options.SignIn.RequireCon
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
