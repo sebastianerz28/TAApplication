@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using TAApplication.Areas.Data;
 
 namespace TAApplication.Data
@@ -50,6 +51,7 @@ namespace TAApplication.Data
                 result = await um.CreateAsync(user, "123ABC!@#def");
                 if (result.Succeeded)
                 {
+                    await um.AddClaimAsync(user, new Claim("UserApp0", user.Unid));
                     //add this to add role to user
                     await um.AddToRoleAsync(user, "Applicant");
                 }

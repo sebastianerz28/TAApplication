@@ -15,6 +15,12 @@ builder.Services.AddDefaultIdentity<TAUser>(options => options.SignIn.RequireCon
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("App0", policy => policy.RequireClaim("UserApp0"));
+});
+
+
 
 var app = builder.Build();
 

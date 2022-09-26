@@ -38,8 +38,10 @@ namespace TAApplication.Controllers
         }
 
         [Authorize(Roles = "Professor, Admin")]
+        [Authorize(Policy = "App0")]
         public IActionResult ApplicationDetails()
         {
+            
             return View();
         }
 
