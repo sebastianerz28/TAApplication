@@ -3,9 +3,12 @@
 @inject RoleManager<IdentityRole> rm
 @inject UserManager<TAUser> um
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
+
 <h1>User Role Manager</h1>
 
-<table id="user-roles-table">
+<table id="users-roles-table" class="cell-border compact stripe">
     <thead>
         <tr>
             <th>Name</th>
@@ -67,3 +70,11 @@
         }
     </tbody>
 </table>
+
+<script>
+    $(document).ready(function () {
+    $('#user-roles-table').DataTable({
+        order: [[3, 'desc']],
+    });
+});
+</script>

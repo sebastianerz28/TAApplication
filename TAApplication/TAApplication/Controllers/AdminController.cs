@@ -31,7 +31,6 @@ namespace TAApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Change_Role(string user_id, string role, string add_remove)
         {
-            
             return Ok();
         }
 

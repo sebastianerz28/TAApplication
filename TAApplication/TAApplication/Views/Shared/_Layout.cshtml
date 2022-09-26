@@ -34,7 +34,7 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item dropdown" id="TA-Dropdown">
-                            <a class="nav-link dropdown-toggle text-white" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">TA</a>
+                            <a class="nav-link dropdown-toggle" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false" role="button">TA</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown03">
                                 @if(SignInManager.IsSignedIn(User)){
                                     <li class="dropdown-item-text">@((await UserManager.GetUserAsync(User)).Name)</li>
@@ -43,10 +43,6 @@
                                     <li class="dropdown-item-text">No Name (Not Signed In)</li>
                                 }
                                 
-                                
-
-                               
-
                                 <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationDetails">Application Details: u0000000</a></li>
                                 <li>
                                     <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationCreate">Application Create: u0000000</a>
