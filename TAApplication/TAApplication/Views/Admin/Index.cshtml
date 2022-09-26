@@ -3,12 +3,14 @@
 @inject RoleManager<IdentityRole> rm
 @inject UserManager<TAUser> um
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css"/>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
 
 <h1>User Role Manager</h1>
 
-<table id="users-roles-table" class="cell-border compact stripe">
+<table id="UserRoles" class="display table table-striped cell-border compact stripe">
     <thead>
         <tr>
             <th>Name</th>
@@ -19,7 +21,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var user in um.Users.OrderBy((o => o.Name)).ToArray())
+        @foreach (var user in um.Users)
         {
             <tr>
                 <td>@user.Name</td>
@@ -73,8 +75,8 @@
 
 <script>
     $(document).ready(function () {
-    $('#user-roles-table').DataTable({
-        order: [[3, 'desc']],
+    $('#UserRoles').DataTable({
+        order: [[0, "desc"]],
     });
 });
 </script>
