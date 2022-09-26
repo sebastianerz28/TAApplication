@@ -7,7 +7,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
         <div class="nav-item dropdown" id="acc-dropdown">
-        <a class="nav-link dropdown-toggle text-white" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false" asp-area="Identity" asp-page="/Account/Manage/Index">Hello @User.Identity?.Name!</a>
+            <a class="nav-link dropdown-toggle text-white" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false" asp-area="Identity" asp-page="/Account/Manage/Index">Hello @UserManager.GetUserAsync(User).Result.Unid (@UserManager.GetRolesAsync(UserManager.GetUserAsync(User).Result).Result.FirstOrDefault())!</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown03">
                 <li><a class="dropdown-item" href="#">Manage your account</a></li>
                 <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Sign out</a></li>
