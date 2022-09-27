@@ -181,7 +181,7 @@ namespace TAApplication.Areas.Identity.Pages.Account
                     }
                 }
             }
-            catch(FormatException e)
+            catch (FormatException)
             {
                 return Page();
             }

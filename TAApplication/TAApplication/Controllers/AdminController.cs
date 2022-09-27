@@ -1,4 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿/**
+ * Author:    Sebastian Ramirez
+ * Partner:   Noah Carlson
+ * Date:      Sept 24, 2022
+ * Course:    CS 4540, University of Utah, School of Computing
+ * Copyright: CS 4540 and Noah Carlson/Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
+ *
+ * I, Sebastian Ramirez, certify that I wrote this code from scratch and did 
+ * not copy it in part or whole from another source.  Any references used 
+ * in the completion of the assignment are cited in my README file and in
+ * the appropriate method header.
+ *
+ * File Contents
+ *
+ *  This file serves as the controller for admins currently (9/27/2022) allowing them to add/remove roles.
+ *    
+ */
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -21,19 +39,31 @@ namespace TAApplication.Controllers
             _rm = rm;
         }
 
-
+        /// <summary>
+        /// Returns the View roles page
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View();
         }
 
+
+        /// <summary>
+        /// This Method Changes the Role of the user
+        /// </summary>
+        /// <param name="user_id"> Id of user to be changed </param>
+        /// <param name="role"> Role to assign/remove user to/from </param>
+        /// <returns> Ok if user could have role updated, NotFound if there was an error </returns>
         [HttpPost]
         public async Task<IActionResult> Change_Role(string user_id, string role)
         {
+            //Get user from the provided ID
             TAUser user = _um.FindByIdAsync(user_id).Result;
             if(!_um.IsInRoleAsync(user, role).Result)
             {
+                //Add user to role if not in role
                 var result = await _um.AddToRoleAsync(user, role);
                 if(result.Succeeded)
                 {
@@ -42,6 +72,7 @@ namespace TAApplication.Controllers
             }
             else 
             {
+                //Remove user from role if in role
                 var result = await _um.RemoveFromRoleAsync(user, role);
                 if (result.Succeeded)
                 {

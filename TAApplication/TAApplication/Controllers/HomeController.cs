@@ -1,4 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿/**
+ * Author:    Sebastian Ramirez
+ * Partner:   Noah Carlson
+ * Date:      Sept 22, 2022
+ * Course:    CS 4540, University of Utah, School of Computing
+ * Copyright: CS 4540 and Noah Carlson/Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
+ *
+ * I, Sebastian Ramirez, certify that I wrote this code from scratch and did 
+ * not copy it in part or whole from another source.  Any references used 
+ * in the completion of the assignment are cited in my README file and in
+ * the appropriate method header.
+ *
+ * File Contents
+ *
+ *  This file serves as the controller for the home page returning appropriate views
+ *    
+ */
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -19,32 +37,60 @@ namespace TAApplication.Controllers
             _logger = logger;
             _um = um;
         }
+
+        /// <summary>
+        /// Returns the home page
+        /// Accessible by any user regardless of login status
+        /// </summary>
+        /// <returns> Home Page </returns>
         [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Returns the privacy view
+        /// Only accessible by logged in user
+        /// </summary>
+        /// <returns> Privacy Page </returns>
         public IActionResult Privacy()
         {
             return View();
         }
 
+        /// <summary>
+        /// Returns the page to create an application
+        /// Only Accessible by Applicants
+        /// </summary>
+        /// <returns> Application Create Page </returns>
         [Authorize(Roles = "Applicant")]
         public IActionResult ApplicationCreate()
         {
             return View();
         }
 
-        [Authorize(Roles = "Professor, Admin, Applicant")]
+        /// <summary>
+        /// Returns the Applicant List
+        /// Only Accesible by professors and admins
+        /// </summary>
+        /// <returns> ApplicantList Page</returns>
+        [Authorize(Roles = "Professor, Admin")]
         public IActionResult ApplicantList()
         {
             return View();
         }
 
+
+        /// <summary>
+        /// Returns Application Details
+        /// Only Accesible by professors, admins, and specific user u0000000
+        /// </summary>
+        /// <returns> ApplicationDetails Page </returns>
         [Authorize(Roles = "Professor, Admin, Applicant")]
         public IActionResult ApplicationDetails()
         {
+            //Check if it is user u0000000
             if (_um.GetUserAsync(User).Result.Unid != "u0000000" && _um.GetRolesAsync(_um.GetUserAsync(User).Result).Result.FirstOrDefault().Equals("Applicant"))
             {
                 return View("NotAuthorized");
