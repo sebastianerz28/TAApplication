@@ -7,6 +7,7 @@
 
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 
+<script src="~/js/Admin/Roles.js"></script>
 
 <h1>User Role Manager</h1>
 
@@ -21,9 +22,7 @@
         </tr>
     </thead>
     <tbody>
-        @{
-            var count = 0;
-        }
+
         @foreach (var user in um.Users)
         {
             <tr>
@@ -33,13 +32,13 @@
                     @if(um.IsInRoleAsync(user,"Applicant").Result)
                     {
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"  checked>
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onclick="Change_Role('@user.Id','Applicant')" checked>
                         </div>
                     }
                     else
                     {
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onclick="Change_Role(,@count,"add")">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onclick="Change_Role('@user.Id','Applicant')">
                         </div>
                     }
                 </td>
@@ -47,13 +46,13 @@
                     @if(um.IsInRoleAsync(user,"Professor").Result)
                     {
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onclick="Change_Role('@user.Id','Professor')" checked>
                         </div>
                     }
                     else
                     {
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onclick="Change_Role('@user.Id','Professor')">
                         </div>
                     }
                 </td>
@@ -61,18 +60,17 @@
                     @if(um.IsInRoleAsync(user,"Admin").Result)
                     {
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onclick="Change_Role('@user.Id','Admin')" checked>
                         </div>
                     }
                     else
                     {
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onclick="Change_Role('@user.Id','Admin')">
                         </div>
                     }
                 </td>
             </tr>
-            count += 1;
         }
     </tbody>
 </table>
