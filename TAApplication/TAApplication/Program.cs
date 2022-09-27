@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TAApplication.Areas.Data;
 using TAApplication.Data;
+using TAApplication.Areas.Identity.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("App0", policy => policy.RequireClaim("UserApp0"));
 });
 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
 
 var app = builder.Build();
