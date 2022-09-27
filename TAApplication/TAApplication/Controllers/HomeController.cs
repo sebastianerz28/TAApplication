@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Cryptography;
+using TAApplication.Areas.Data;
 using TAApplication.Models;
 
 namespace TAApplication.Controllers
@@ -9,10 +12,12 @@ namespace TAApplication.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        UserManager<TAUser> _um;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserManager<TAUser> um)
         {
             _logger = logger;
+            _um = um;
         }
         [AllowAnonymous]
         public IActionResult Index()
@@ -31,18 +36,23 @@ namespace TAApplication.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Professor, Admin")]
+        [Authorize(Roles = "Professor, Admin, Applicant")]
         public IActionResult ApplicantList()
         {
             return View();
         }
 
-        [Authorize(Roles = "Professor, Admin")]
-        [Authorize(Policy = "App0")]
+        [Authorize(Roles = "Professor, Admin, Applicant")]
         public IActionResult ApplicationDetails()
         {
-            
-            return View();
+            if (_um.GetUserAsync(User).Result.Unid != "u0000000" && _um.GetRolesAsync(_um.GetUserAsync(User).Result).Result.FirstOrDefault().Equals("Applicant"))
+            {
+                return View("NotAuthorized");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

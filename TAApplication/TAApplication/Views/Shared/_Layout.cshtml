@@ -33,40 +33,41 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item dropdown" id="TA-Dropdown">
-                            <a class="nav-link dropdown-toggle" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false" role="button">TA</a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdown03">
-                                @if(SignInManager.IsSignedIn(User)){
-                                    <li class="dropdown-item-text">@((await UserManager.GetUserAsync(User)).Name)</li>
-                                }
-                                else{
-                                    <li class="dropdown-item-text">No Name (Not Signed In)</li>
-                                }
-                                
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationDetails">Application Details: u0000000</a></li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationCreate">Application Create: u0000000</a>
-                                </li>
-                                @if (User.IsInRole("Applicant"))
-                                {
-                                    <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationCreate">Apply</a>
-                                    </li>
-                                }
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicantList">View Applications</a>
-                                    </li>
-                                }
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">User Roles</a>
-                                    </li>
-                                }
-                            </ul>
-                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown" id="TA-Dropdown">
+                                <a class="nav-link dropdown-toggle" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false" role="button">TA</a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdown03">
+
+                                    <li class="dropdown-item-text">@(
+                                    (await UserManager.GetUserAsync(User)).Name
+                                    )</li>
+
+                                    @if (User.IsInRole("Applicant"))
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationCreate">Apply</a>
+                                        </li>
+                                    }
+                                    @if (UserManager.GetUserAsync(User).Result.Unid == "u0000000")
+                                    {
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationDetails">Application Details</a></li>
+                                    }
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicantList">View Applications</a>
+                                        </li>
+                                    }
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">User Roles</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
