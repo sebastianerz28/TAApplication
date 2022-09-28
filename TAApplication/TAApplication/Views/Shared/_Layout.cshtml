@@ -75,28 +75,22 @@
                                     (await UserManager.GetUserAsync(User)).Name
                                     )</li>
 
-                                    @if (User.IsInRole("Applicant"))
-                                    {
                                         <li>
-                                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationCreate">Apply</a>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationCreate">Apply u0000000</a>
                                         </li>
-                                    }
-                                    @if (UserManager.GetUserAsync(User).Result.Unid == "u0000000")
-                                    {
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationDetails">Application Details</a></li>
-                                    }
-                                    @if (User.IsInRole("Admin"))
-                                    {
+
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationDetails">Application Details u0000000</a></li>
+
+
                                         <li>
                                             <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicantList">View Applications</a>
                                         </li>
-                                    }
-                                    @if (User.IsInRole("Admin"))
-                                    {
+
+
                                         <li>
                                             <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">User Roles</a>
                                         </li>
-                                    }
+
                                 </ul>
                             </li>
                         }
