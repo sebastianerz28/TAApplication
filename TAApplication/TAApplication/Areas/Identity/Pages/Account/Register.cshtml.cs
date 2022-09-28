@@ -158,7 +158,15 @@ namespace TAApplication.Areas.Identity.Pages.Account
 
 
                         user.Name = Input.Name;
-                        user.ReferredTo = Input.Refferedto;
+                        if (Input.Refferedto is null)
+                        {
+                            user.ReferredTo = "";
+                        }
+                        else
+                        {
+                            user.ReferredTo = Input.Refferedto;
+                        }
+                        
 
                         await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                         await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
