@@ -11,7 +11,7 @@ Copyright:  CS 4540 and Noah Carlson, Sebastian Ramirez - This work may not be c
 ```
 # Website Links:
 Noah - https://ec2-34-201-108-160.compute-1.amazonaws.com
-Sebastian - https://ec2-3-95-151-197.compute-1.amazonaws.com/
+Sebastian - https://ec2-3-88-232-229.compute-1.amazonaws.com
 
 # Overview of the TA Application Functionality 
 
