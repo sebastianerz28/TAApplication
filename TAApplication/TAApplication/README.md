@@ -52,6 +52,7 @@ All images were free art commons.
     2. Stack Overflow - https://stackoverflow.com/questions/12763344/removing-bold-styling-from-part-of-a-header
     3. All logos owned by the University of Utah - https://brand.utah.edu/secure/university-of-utah-logo-downloads/
     4. Colors used - https://utah.edu
+    5. Stack Overflow - https://stackoverflow.com/questions/19689183/add-user-to-role-asp-net-identity/56737271#56737271
 
 # Time Expenditures:
 
