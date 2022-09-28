@@ -1,7 +1,7 @@
 ﻿/**
  * Author:    Sebastian Ramirez
  * Partner:   Noah Carlson
- * Date:      Sept 22, 2022
+ * Date:      Sept 27, 2022
  * Course:    CS 4540, University of Utah, School of Computing
  * Copyright: CS 4540 and Noah Carlson/Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
  *
@@ -12,7 +12,7 @@
  *
  * File Contents
  *
- *  This file serves as the controller for the home page returning appropriate views
+ *  This file serves as the controller for the home page returning appropriate views for other pages
  *    
  */
 

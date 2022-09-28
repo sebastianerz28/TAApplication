@@ -1,5 +1,21 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+/**
+ * Author:    Sebastian Ramirez
+ * Partner:   Noah Carlson
+ * Date:      09/27/2022
+ * Course:    CS 4540, University of Utah, School of Computing
+ * Copyright: CS 4540 and [Noah Carlson/Sebastian Ramirez] - This work may not be copied for use in Academic Coursework.
+ *
+ * I, Sebastian Ramirez, certify that I wrote this code from scratch and did 
+ * not copy it in part or whole from another source.  Any references used 
+ * in the completion of the assignment are cited in my README file and in
+ * the appropriate method header.
+ *
+ * File Contents
+ *      This File contains the methods for the user logout.
+ */
+
 #nullable disable
 
 using System;
