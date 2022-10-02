@@ -1,0 +1,76 @@
+﻿@model IEnumerable<TAApplication.Models.Application>
+@using Microsoft.AspNetCore.Identity
+@using TAApplication.Areas.Data
+@inject RoleManager<IdentityRole> rm
+@inject UserManager<TAUser> um
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DegreePursuing)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GPA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DesiredHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvailableBeforeSemester)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SemestersCompleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModificationDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-controller="Applications" asp-action="ApplicationDetails">@item.Applicant.Name</aa>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DegreePursuing)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GPA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DesiredHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableBeforeSemester)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SemestersCompleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModificationDate)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
