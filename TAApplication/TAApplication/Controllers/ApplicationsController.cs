@@ -15,25 +15,28 @@ namespace TAApplication.Controllers
     [Authorize]
     public class ApplicationsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private ApplicationDbContext _context;
+        private readonly ILogger<ApplicationsController> _logger;
 
-        public ApplicationsController(ApplicationDbContext context)
+        public ApplicationsController(ILogger<ApplicationsController> logger, ApplicationDbContext DB)
         {
-            _context = context;
+            _logger = logger;
+            _context = DB;
         }
 
         // GET: Applications
         [Authorize(Roles = "Admin, Professor")]
         public async Task<IActionResult> List()
         {
-              return View(await _context.Applications.ToListAsync());
+            return View(await _context.Applications.Include("TAUser").ToArrayAsync());
         }
 
         // GET: Applications
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
-        { 
-            return View(await _context.Applications.ToListAsync());
+        {
+            
+            return View();
         }
 
         // GET: Applications/Details/5
@@ -159,14 +162,14 @@ namespace TAApplication.Controllers
             {
                 _context.Applications.Remove(application);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ApplicationExists(int id)
         {
-          return _context.Applications.Any(e => e.Id == id);
+            return _context.Applications.Any(e => e.Id == id);
         }
     }
 }

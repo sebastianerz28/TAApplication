@@ -19,6 +19,8 @@
     ViewData["Title"] = "List";
 }
 
+
+
 <h1 class="center">Applicant List</h1>
 <table id="applicants-table" class="table table-striped">
     <thead>
@@ -37,7 +39,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td class="applicant-name"><a class="table-link" asp-controller="Applications" asp-area="Applications" asp-action="ApplicationDetails">@item.Applicant.Name</a></td>
+                <td class="applicant-name"><a class="table-link" asp-controller="Applications" asp-area="Applications" asp-action="ApplicationDetails">@item.TAUser.Name</a></td>
                 <td class="">@Html.DisplayFor(modelItem => item.DegreePursuing)</td>
                 <td class="applicant-GPA">@Html.DisplayFor(modelItem => item.GPA)</td>
                 <td class="applicant-degree"> @Html.DisplayFor(modelItem => item.Department)</td>
