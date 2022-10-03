@@ -31,7 +31,7 @@ namespace TAApplication.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-
+            _httpContextAccessor = new HttpContextAccessor();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

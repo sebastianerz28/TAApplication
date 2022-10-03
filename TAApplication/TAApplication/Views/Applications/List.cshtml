@@ -10,9 +10,6 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -47,7 +44,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a asp-controller="Applications" asp-action="ApplicationDetails">@item.Applicant.Name</aa>
+                <a asp-controller="Applications" asp-action="ApplicationDetails">@item.Applicant.Name</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DegreePursuing)

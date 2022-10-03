@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TAApplication.Models.Application>
+
+@{
+    ViewData["Title"] = "Applicants Overview";
+}
+
+<h1 class="center">TA Applicants Overview</h1>
+
+<div class="row">
+    <div class="col-sm-6" id="Info-label">
+        <h2 id="hiring-stats-header">
+            Hiring Statistics
+        </h2>
+        <table>
+            <tr>
+                <td>Students Applied:</td>
+                <td class="Applicant-overview-data">@Model.Count()</td>
+            </tr>
+            <tr>
+                <td>Average Gpa of Applicants:</td>
+                <td class="Applicant-overview-data">0</td>
+            </tr>
+            <tr>
+                <td>Number of Unhired TA's:</td>
+                <td class="Applicant-overview-data">@Model.Count()</td>
+            </tr>
+            <tr>
+                <td>Number of Hired TA's:</td>
+                <td class="Applicant-overview-data">0</td>
+            </tr>
+        </table>
+
+    </div>
+    <div class="col-sm-6" id="Info-image">
+        <img id="stats-chart" src="~/Sample_Pie_Chart.png" alt="Pie Chart of Statistics" />
+    </div>
+</div>
+
+
+
+
+

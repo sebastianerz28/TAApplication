@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using TAApplication.Data;
 using TAApplication.Models;
@@ -26,6 +27,13 @@ namespace TAApplication.Controllers
         public async Task<IActionResult> List()
         {
               return View(await _context.Applications.ToListAsync());
+        }
+
+        // GET: Applications
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Index()
+        { 
+            return View(await _context.Applications.ToListAsync());
         }
 
         // GET: Applications/Details/5

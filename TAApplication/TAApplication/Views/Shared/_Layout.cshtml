@@ -57,7 +57,10 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <li>
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ApplicantList">View Applications</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="List">View Applications</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="Index">Applications Overview</a>
                                 </li>
                             }
 
