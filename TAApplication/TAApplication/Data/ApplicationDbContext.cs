@@ -27,10 +27,17 @@ namespace TAApplication.Data
     public class ApplicationDbContext : IdentityDbContext<TAUser>
     {
         private HttpContextAccessor _httpContextAccessor;
-        public DbSet<Application>? Applications { get; set; }
+        public DbSet<Application> Applications { get; set; }
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            _httpContextAccessor = new HttpContextAccessor();
+        }
+
+        public ApplicationDbContext()
+        {
+            
             _httpContextAccessor = new HttpContextAccessor();
         }
 
@@ -57,6 +64,7 @@ namespace TAApplication.Data
                 var result = await um.CreateAsync(user, "123ABC!@#def");
                 if (result.Succeeded)
                 {
+
                     //add this to add role to user
                     await um.AddToRoleAsync(user, "Admin");
                 }
@@ -101,6 +109,56 @@ namespace TAApplication.Data
                     await um.AddToRoleAsync(user, "Applicant");
                 }
             }
+
+            if(Applications.Count() < 2)
+            {
+                Application a0 = new Application
+                {
+
+                    DegreePursuing = DegreePursuing.BS,
+                    Department = "CS",
+                    GPA = 3.0,
+                    DesiredHours = 10,
+                    AvailableBeforeSemester = true,
+                    SemestersCompleted = 3,
+                    CreationDate = DateTime.Now,
+                    ModificationDate = DateTime.Now,
+                    TAUser = um.FindByEmailAsync("u0000000@utah.edu").Result
+
+
+                };
+
+                Applications.Add(a0);
+                SaveChanges();
+
+
+
+
+                Application a1 = new Application
+                {
+
+                    DegreePursuing = DegreePursuing.BS,
+                    Department = "CS",
+                    GPA = 3.0,
+                    DesiredHours = 10,
+                    PersonalStatement = "Sample Personal Statement",
+                    TransferSchool = "Arizona State",
+                    LinkedIn = "www.linkedin.com",
+                    ResumeName = "app1resume.pdf",
+                    AvailableBeforeSemester = true,
+                    SemestersCompleted = 3,
+                    CreationDate = DateTime.Now,
+                    ModificationDate = DateTime.Now,
+                    TAUser = um.FindByEmailAsync("u0000001@utah.edu").Result
+
+
+                };
+
+                Applications.Add(a1);
+                SaveChanges();
+            }
+
+
 
         }
 
