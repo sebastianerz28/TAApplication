@@ -26,11 +26,11 @@ namespace TAApplication.Data
 {
     public class ApplicationDbContext : IdentityDbContext<TAUser>
     {
-        private HttpContextAccessor _httpContextAccessor;
+        private IHttpContextAccessor _httpContextAccessor;
         public DbSet<Application> Applications { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
-            HttpContextAccessor http)
+            IHttpContextAccessor http)
             : base(options)
         {
             _httpContextAccessor = http;
