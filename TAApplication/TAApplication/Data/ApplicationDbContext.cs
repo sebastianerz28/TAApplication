@@ -29,10 +29,11 @@ namespace TAApplication.Data
         private HttpContextAccessor _httpContextAccessor;
         public DbSet<Application> Applications { get; set; }
         
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
+            HttpContextAccessor http)
             : base(options)
         {
-            _httpContextAccessor = new HttpContextAccessor();
+            _httpContextAccessor = http;
         }
 
         public ApplicationDbContext()

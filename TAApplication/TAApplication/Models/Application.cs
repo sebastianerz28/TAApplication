@@ -70,7 +70,7 @@ namespace TAApplication.Models
         public DateTime ModificationDate { get; set; }
 
         [Required]
-        public TAUser Applicant { get; set; }
+        public TAUser TAUser { get; set; }
         
     }
 }
