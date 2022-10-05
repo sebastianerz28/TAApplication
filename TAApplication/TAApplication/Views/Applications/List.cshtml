@@ -12,11 +12,14 @@
 @model IEnumerable<TAApplication.Models.Application>
 @using Microsoft.AspNetCore.Identity
 @using TAApplication.Areas.Data
+@using TAApplication.Data
 @inject RoleManager<IdentityRole> rm
 @inject UserManager<TAUser> um
+@inject ApplicationDbContext _context
 
 @{
     ViewData["Title"] = "List";
+    
 }
 
 
@@ -38,8 +41,10 @@
     <tbody>
         @foreach (var item in Model)
         {
+            var query = from a in _context.Applications where a.TAUser == item.TAUser select a.Id;
+            var dic = new Dictionary<string, string> { { "id", query.First().ToString() } };
             <tr>
-                <td class="applicant-name"><a class="table-link" asp-controller="Applications" asp-area="Applications" asp-action="ApplicationDetails">@item.TAUser.Name</a></td>
+                <td class="applicant-name"><a class="table-link" asp-controller="Applications" asp-all-route-data="dic" asp-area="Applications" asp-action="Details" >@item.TAUser.Name</a></td>
                 <td class="">@Html.DisplayFor(modelItem => item.DegreePursuing)</td>
                 <td class="applicant-GPA">@Html.DisplayFor(modelItem => item.GPA)</td>
                 <td class="applicant-degree"> @Html.DisplayFor(modelItem => item.Department)</td>
