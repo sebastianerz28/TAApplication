@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using TAApplication.Areas.Data;
 using TAApplication.Data;
 using TAApplication.Models;
 
@@ -17,11 +19,14 @@ namespace TAApplication.Controllers
     {
         private ApplicationDbContext _context;
         private readonly ILogger<ApplicationsController> _logger;
+        private UserManager<TAUser> _um;
 
-        public ApplicationsController(ILogger<ApplicationsController> logger, ApplicationDbContext DB)
+        public ApplicationsController(ILogger<ApplicationsController> logger, ApplicationDbContext DB,
+            UserManager<TAUser> um)
         {
             _logger = logger;
             _context = DB;
+            _um = um;
         }
 
         // GET: Applications
@@ -36,7 +41,7 @@ namespace TAApplication.Controllers
         public async Task<IActionResult> Index()
         {
             
-            return View();
+            return View(await _context.Applications.Include("TAUser").ToArrayAsync());
         }
 
         // GET: Applications/Details/5
@@ -70,11 +75,18 @@ namespace TAApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,DegreePursuing,Department,GPA,DesiredHours,AvailableBeforeSemester,SemestersCompleted,PersonalStatement,TransferSchool,LinkedIn,ResumeName,CreationDate,ModificationDate")] Application application)
         {
+            ModelState.Remove("TAUser");
+            TAUser user = await _um.GetUserAsync(User);
+            application.TAUser = user;
             if (ModelState.IsValid)
             {
+                var date = DateTime.Now;
+                application.CreationDate = date;
+                application.ModificationDate = date;
                 _context.Add(application);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var query = from a in _context.Applications where a.TAUser == user select a.Id;
+                return RedirectToAction(nameof(Details),new { id = query.First() });
             }
             return View(application);
         }

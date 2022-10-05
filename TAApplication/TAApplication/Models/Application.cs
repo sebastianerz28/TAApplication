@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.Windows.Markup;
 using TAApplication.Areas.Data;
 
 namespace TAApplication.Models
@@ -12,7 +13,7 @@ namespace TAApplication.Models
 
         [Required]
         [Display(Name = "The degree being pursued", ShortName = "Degree Pursuing",Prompt ="BS", Description ="This data will help us assign you to the appropriate level of courses e.g(2xxx) level")]
-        public DegreePursuing DegreePursuing { get; set; }
+        public DegreePursuing DegreePursuing { get; set;}
 
         [Required]
         [Display(Name = "The department that hosts your major", ShortName = "Department", Prompt = "CS, CE", Description = "This data will help us assign you to the correct type of classes")]
@@ -56,7 +57,7 @@ namespace TAApplication.Models
 
         [Display(Name = "Resume", ShortName = "Resume", Prompt = "Insert a personal resume", Description = "This is where you can input your personal resume to give more background on your accomplishments.")]
         [DisplayFormat(NullDisplayText = "Not Provided")]
-        [RegularExpression("^[^] +\\.pdf$", ErrorMessage ="File must be a pdf")]
+        [RegularExpression("(.*\\.)(pdf)$", ErrorMessage ="File must be a pdf")]
         public string? ResumeName { get; set; }
 
         [Required]
@@ -70,6 +71,7 @@ namespace TAApplication.Models
         public DateTime ModificationDate { get; set; }
 
         [Required]
+        [Key]
         public TAUser TAUser { get; set; }
         
     }

@@ -51,7 +51,10 @@
                             @if (User.IsInRole("Applicant"))
                             {
                                 <li>
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ApplicationCreate">Apply</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="Create">Apply</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" asp-route-id=""; asp-controller="Applications" asp-action="Details">Application Details</a>
                                 </li>
                             }
                             @if (User.IsInRole("Admin"))
