@@ -43,17 +43,21 @@ namespace TAApplication.Controllers
             
             return View(await _context.Applications.Include("TAUser").ToArrayAsync());
         }
-
-        // GET: Applications/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null || _context.Applications == null)
             {
                 return NotFound();
             }
+            int appID = get_application_id(id);
+
+            if (appID == -1 || _context.Applications == null)
+            {
+                return NotFound();
+            }
 
             var application = await _context.Applications
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == appID);
             if (application == null)
             {
                 return NotFound();
@@ -61,6 +65,35 @@ namespace TAApplication.Controllers
 
             return View(application);
         }
+
+        private int get_application_id(string userID)
+        {
+           foreach(var app in _context.Applications)
+            {
+                if(app.TAUser.Id.Equals(userID))
+                {
+                    return app.Id;
+                }
+            }
+            return -1;
+        }
+        // GET: Applications/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.Applications == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var application = await _context.Applications
+        //        .FirstOrDefaultAsync(m => m.Id == id);
+        //    if (application == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(application);
+        //}
 
         // GET: Applications/Create
         public IActionResult Create()

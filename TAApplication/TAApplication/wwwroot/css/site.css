@@ -50,3 +50,28 @@
 #TA-winner-name {
     text-decoration: underline;
 }
+
+.prompt-label {
+    text-align: left;
+    padding-top: 7px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.data-field-col {
+    padding-right: 10%;
+}
+
+
+#Application-page-title-wrapper {
+    text-align:center;
+}
+
+.row{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.submit-button-centered{
+    text-align: center;
+}
