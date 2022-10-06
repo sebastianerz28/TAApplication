@@ -50,15 +50,22 @@ namespace TAApplication.Controllers
                 return NotFound();
             }
             
-            var application = await _context.Applications
-                .FirstOrDefaultAsync(m => m.TAUser.Id.Equals(id));
+            
+            var application = from a in _context.Applications.Include("TAUser")
+                              join u in _context.Users on a.TAUser equals u
+                              where u.Id == id
+                              select a;
 
-            if (application == null)
+
+           /* var application = await _context.Applications
+                .FirstOrDefaultAsync(m => m.TAUser.Id.Equals(id));*/
+
+            if (application.Count() == 0)
             {
                 return NotFound();
             }
 
-            return View(application);
+            return View(await application.FirstOrDefaultAsync());
         }
 
         // GET: Applications/Details/5
