@@ -75,3 +75,7 @@
 .submit-button-centered{
     text-align: center;
 }
+
+#application-container{
+    max-width:800px;
+}
