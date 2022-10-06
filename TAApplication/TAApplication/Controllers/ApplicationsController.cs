@@ -123,12 +123,15 @@ namespace TAApplication.Controllers
                 return NotFound();
             }
 
-            var application = await _context.Applications.FindAsync(id);
-            if (application == null)
+           // var application = await _context.Applications.FindAsync(id);
+            var query = from a in _context.Applications.Include("TAUser")
+                              where a.Id == id
+                              select a;
+            if (query.Count() < 1)
             {
                 return NotFound();
             }
-            return View(application);
+            return View(await query.FirstOrDefaultAsync());
         }
 
         // POST: Applications/Edit/5
