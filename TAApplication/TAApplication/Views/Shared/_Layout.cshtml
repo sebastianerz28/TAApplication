@@ -9,14 +9,15 @@
   File Contents
     Contains the navbar html code which is inserted in every pages header tag.
 -->
-
-
 @using Microsoft.AspNetCore.Identity
 @using TAApplication.Areas.Data
 @using TAApplication.Data
+@using Microsoft.EntityFrameworkCore
 @inject SignInManager<TAUser> SignInManager
 @inject UserManager<TAUser> UserManager
 @inject ApplicationDbContext _context
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +34,7 @@
     <link rel="stylesheet" href="~/TAApplication.styles.css" asp-append-version="true" />
     <meta name="keywords" content="TA, TA CS Utah, U of U TA, Teaching Assistant, TA application" />
     <title>@ViewData["Title"] - TAApplication</title>
-    
+
 </head>
 <body>
     <header>
@@ -53,15 +54,27 @@
                         {
                             @if (User.IsInRole("Applicant"))
                             {
-                                <li>
-                                    <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="Create">Apply</a>
-                                </li>
-                                
-                                var dic = new Dictionary<string, string> { { "id", UserManager.GetUserAsync(User).Result.Id } };
-    
-                                <li>
-                                    <a class="nav-link" asp-controller="Applications" asp-action="Details" asp-all-route-data="dic">Application Details</a>
-                                </li>
+                                var userID = UserManager.GetUserId(User);
+                                var query = from a in _context.Applications.Include("TAUser")
+                                            where userID == a.TAUser.Id
+                                            select a;
+
+
+                                @if (query.Count() == 0)
+                                {
+                                    <li>
+                                        <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="Create">Apply</a>
+                                    </li>
+
+                                }
+                                else
+                                {
+                                    var dic = new Dictionary<string, string> { { "id", UserManager.GetUserAsync(User).Result.Id } };
+                                    <li>
+                                        <a class="nav-link" asp-controller="Applications" asp-action="Details" asp-all-route-data="dic">Application Details</a>
+                                    </li>
+                                }
+
                             }
                             @if (User.IsInRole("Admin"))
                             {
@@ -74,39 +87,63 @@
                             }
 
                         }
-                        
-
-
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item dropdown" id="TA-Dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false" role="button">TA</a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown03">
-
-                                    <li class="dropdown-item-text">@(
-                                    (await UserManager.GetUserAsync(User)).Name
-                                    )</li>
-
-                                        <li>
-                                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationCreate">Apply u0000000</a>
-                                        </li>
-
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicationDetails">Application Details u0000000</a></li>
-
-
-                                        <li>
-                                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ApplicantList">View Applications</a>
-                                        </li>
-
-
-                                        <li>
-                                            <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">User Roles</a>
-                                        </li>
-
+                                    <li class="dropdown-item-text">
+                                        @((await UserManager.GetUserAsync(User)).Name)
+                                    </li>
+                                    <li>
+                                        <ul class="dropdown-item-text">
+                                            PS5
+                                            <li>
+                                                <a class="dropdown-item remove-bullet" asp-controller="Applications" asp-action="Index">Application Index</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item remove-bullet" asp-controller="Applications" asp-action="List">Application List</a>
+                                            </li>
+                                            <li>
+                                                @{
+                                                    var u0ID = new Dictionary<string, string> { { "id", (await UserManager.FindByEmailAsync("u0000000@utah.edu")).Id } };
+                                                }
+                                                <a class="dropdown-item remove-bullet" asp-controller="Applications" asp-action="Details" asp-all-route-data="u0ID">Application for u0000000</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="dropdown-item-text">
+                                            Admin
+                                            <li>
+                                                <a class="dropdown-item remove-bullet" asp-controller="Admin" asp-action="Index">User Roles</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item remove-bullet" asp-controller="Applications" asp-action="List">Applicant List</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="dropdown-item-text">
+                                            OLD
+                                            <li>
+                                                <a class="dropdown-item remove-bullet" asp-area="OLD" asp-controller="OLD" asp-action="ApplicationDetails">OLD Application Details</a>
+                                                
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item remove-bullet" asp-area="OLD" asp-controller="OLD" asp-action="ApplicationCreate">OLD Application Create</a>
+                                            </li>
+                                            
+                                            <li>
+                                                <a class="dropdown-item remove-bullet" asp-area="OLD" asp-controller="OLD" asp-action="ApplicantList">OLD Applicant List</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
                         }
-                        else{
+                        else
+                        {
                             <li class="nav-item dropdown" id="TA-Dropdown">
                                 <a class="nav-link dropdown-toggle" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false" role="button">TA</a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdown03">
