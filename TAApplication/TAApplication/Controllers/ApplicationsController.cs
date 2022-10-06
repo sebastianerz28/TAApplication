@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using TAApplication.Areas.Data;
 using TAApplication.Data;
 using TAApplication.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace TAApplication.Controllers
 {
@@ -109,8 +110,7 @@ namespace TAApplication.Controllers
                 application.ModificationDate = date;
                 _context.Add(application);
                 await _context.SaveChangesAsync();
-                var query = from a in _context.Applications where a.TAUser == user select a.Id;
-                return RedirectToAction(nameof(Details),new { id = query.First() });
+                return RedirectToAction(nameof(Details),new { id = user.Id });
             }
             return View(application);
         }
@@ -146,6 +146,9 @@ namespace TAApplication.Controllers
                 return NotFound();
             }
 
+            ModelState.Remove("TAUser");
+            TAUser user = _context.Applications.Include("TAUser").First().TAUser;
+            application.TAUser = user;
             if (ModelState.IsValid)
             {
                 try
@@ -164,7 +167,7 @@ namespace TAApplication.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = application.TAUser.Id });
             }
             return View(application);
         }
