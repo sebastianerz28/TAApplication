@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="~/TAApplication.styles.css" asp-append-version="true" />
     <meta name="keywords" content="TA, TA CS Utah, U of U TA, Teaching Assistant, TA application" />
     <title>@ViewData["Title"] - TAApplication</title>
+    
 </head>
 <body>
     <header>
@@ -55,8 +56,11 @@
                                 <li>
                                     <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="Create">Apply</a>
                                 </li>
+                                
+                                var dic = new Dictionary<string, string> { { "id", UserManager.GetUserAsync(User).Result.Id } };
+    
                                 <li>
-                                    <a class="nav-link" asp-route-id=""; asp-controller="Applications" asp-action="Details">Application Details</a>
+                                    <a class="nav-link" asp-controller="Applications" asp-action="Details" asp-all-route-data="dic">Application Details</a>
                                 </li>
                             }
                             @if (User.IsInRole("Admin"))

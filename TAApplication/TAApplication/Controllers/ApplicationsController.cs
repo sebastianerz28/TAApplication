@@ -49,15 +49,10 @@ namespace TAApplication.Controllers
             {
                 return NotFound();
             }
-            int appID = get_application_id(id);
-
-            if (appID == -1 || _context.Applications == null)
-            {
-                return NotFound();
-            }
-
+            
             var application = await _context.Applications
-                .FirstOrDefaultAsync(m => m.Id == appID);
+                .FirstOrDefaultAsync(m => m.TAUser.Id.Equals(id));
+
             if (application == null)
             {
                 return NotFound();
@@ -66,17 +61,6 @@ namespace TAApplication.Controllers
             return View(application);
         }
 
-        private int get_application_id(string userID)
-        {
-           foreach(var app in _context.Applications)
-            {
-                if(app.TAUser.Id.Equals(userID))
-                {
-                    return app.Id;
-                }
-            }
-            return -1;
-        }
         // GET: Applications/Details/5
         //public async Task<IActionResult> Details(int? id)
         //{
