@@ -36,12 +36,6 @@ namespace TAApplication.Data
             _httpContextAccessor = http;
         }
 
-        public ApplicationDbContext()
-        {
-            
-            _httpContextAccessor = new HttpContextAccessor();
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
