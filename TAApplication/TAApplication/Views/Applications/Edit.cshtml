@@ -1,11 +1,18 @@
 ﻿@model TAApplication.Models.Application
 
+@using Microsoft.AspNetCore.Identity
+@using TAApplication.Areas.Data
+@using TAApplication.Data
+@using Microsoft.EntityFrameworkCore
+@inject SignInManager<TAUser> SignInManager
+@inject UserManager<TAUser> UserManager
+@inject ApplicationDbContext _context
 @{
     ViewData["Title"] = "Edit";
 }
 
 <div id="Application-page-title-wrapper">
-    <h1 id="Application-page-title">Edit @Model.TAUser.Name @Model.TAUser.Unid's Application </h1>
+    <h1 id="Application-page-title">Edit @UserManager.GetUserAsync(User).Result.Name @UserManager.GetUserAsync(User).Result.Name </h1>
     <hr />
     <h4 id="application-description" class="text-muted">Edit the fields as needed and click save before exiting the page.</h4>
 </div>
@@ -102,7 +109,7 @@
                 <span asp-validation-for="ResumeName" class="text-danger"></span>
             </div>
         </div>
-        @{var dic = new Dictionary<string, string> { { "id", Model.TAUser.Id } };}
+        @{var dic = new Dictionary<string, string> { { "id", Model.Id.ToString()} };}
         <div class="form-group submit-button-centered">
             <button asp-action="Details" asp-all-route-data="dic" class="btn btn-danger btn-md">Back</button>
             <button type="submit" class="btn btn-danger btn-md" id="application-submit-button" data-bs-toggle="tooltip" data-bs-placement="bottom">Save</button>
