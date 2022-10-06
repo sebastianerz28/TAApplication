@@ -41,25 +41,30 @@ namespace TAApplication.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
-            
             return View(await _context.Applications.Include("TAUser").ToArrayAsync());
         }
+
+        [Authorize(Roles = "Admin, Professor, Applicant")]
         public async Task<IActionResult> Details(string? id)
         {
+            /*if (_um.GetUserAsync(User).Result.Unid != id && (await _um.GetRolesAsync(_um.GetUserAsync(User).Result)).First().Equals("Applicant"))
+            {
+                return View("NotAuthorized");
+            }*/
             if (id == null || _context.Applications == null)
             {
                 return NotFound();
             }
-            
-            
+
+
             var application = from a in _context.Applications.Include("TAUser")
                               join u in _context.Users on a.TAUser equals u
                               where u.Id == id
                               select a;
 
 
-           /* var application = await _context.Applications
-                .FirstOrDefaultAsync(m => m.TAUser.Id.Equals(id));*/
+            /* var application = await _context.Applications
+                 .FirstOrDefaultAsync(m => m.TAUser.Id.Equals(id));*/
 
             if (application.Count() == 0)
             {
@@ -100,19 +105,30 @@ namespace TAApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,DegreePursuing,Department,GPA,DesiredHours,AvailableBeforeSemester,SemestersCompleted,PersonalStatement,TransferSchool,LinkedIn,ResumeName,CreationDate,ModificationDate")] Application application)
         {
-            ModelState.Remove("TAUser");
-            TAUser user = await _um.GetUserAsync(User);
-            application.TAUser = user;
-            if (ModelState.IsValid)
+
+            //Finds application matching with matching userID
+            var query = from a in _context.Applications.Include("TAUser")
+                        where a.TAUser.Id == _um.GetUserId(User)
+                        select a;
+            //If query has no results then an application for this user has not been made
+            if (query.Count() == 0)
             {
-                var date = DateTime.Now;
-                application.CreationDate = date;
-                application.ModificationDate = date;
-                _context.Add(application);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details),new { id = user.Id });
+                ModelState.Remove("TAUser");
+                TAUser user = await _um.GetUserAsync(User);
+                application.TAUser = user;
+                if (ModelState.IsValid)
+                {
+                    var date = DateTime.Now;
+                    application.CreationDate = date;
+                    application.ModificationDate = date;
+                    _context.Add(application);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new { id = user.Id });
+                }
             }
-            return View(application);
+            //If application exists redirects to the details of the application
+            return RedirectToAction(nameof(Details), new { id = query.First().TAUser.Id });
+            /*return View(application);*/
         }
 
         // GET: Applications/Edit/5
@@ -123,10 +139,10 @@ namespace TAApplication.Controllers
                 return NotFound();
             }
 
-           // var application = await _context.Applications.FindAsync(id);
+
             var query = from a in _context.Applications.Include("TAUser")
-                              where a.Id == id
-                              select a;
+                        where a.Id == id
+                        select a;
             if (query.Count() < 1)
             {
                 return NotFound();
@@ -145,15 +161,34 @@ namespace TAApplication.Controllers
             {
                 return NotFound();
             }
-
             ModelState.Remove("TAUser");
-            TAUser user = _context.Applications.Include("TAUser").First().TAUser;
+
+
+            //TODO: Fix this error
+            //Issue: querying the user causes it to be tracked already which causes the error
+
+            //Variation 1: causes error
+            TAUser user = (await _context.Applications.Include("TAUser").FirstAsync(m => m.Id == id)).TAUser; //Gets user associated with application
             application.TAUser = user;
+
+
+            //Variation 2 (Fixes it but this I assume this is not intended way,
+            //as it defeats the purpose of Professor Germains tracking methods in ApplicationDbContext.cs)
+            /* TAUser user = (await _context.Applications.AsNoTracking().Include("TAUser")
+                 .FirstAsync(m => m.Id == id)).TAUser;
+               application.TAUser = user;
+               application.ModificationDate = DateTime.Now;
+            */
+
             if (ModelState.IsValid)
             {
                 try
+
                 {
+                    //For variation 2
+                    /*_context.Entry(user).State = EntityState.Unchanged;*/
                     _context.Update(application);
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -173,8 +208,19 @@ namespace TAApplication.Controllers
         }
 
         // GET: Applications/Delete/5
+        [Authorize(Roles = "Admin, Applicant")]
         public async Task<IActionResult> Delete(int? id)
         {
+
+            var query = from a in _context.Applications.Include("TAUser")
+                        where a.Id == id
+                        select new { id = a.TAUser.Id };
+
+            if ((_um.GetUserId(User) != query.First().id) && User.IsInRole("Applicant"))
+            {
+                return View("NotAuthorized");
+            }
+
             if (id == null || _context.Applications == null)
             {
                 return NotFound();
@@ -186,8 +232,11 @@ namespace TAApplication.Controllers
             {
                 return NotFound();
             }
-
             return View(application);
+
+
+
+
         }
 
         // POST: Applications/Delete/5
