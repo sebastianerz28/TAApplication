@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace TAApplication.Controllers
         {
             return View(await _context.Applications.Include("TAUser").ToArrayAsync());
         }
-
+        // GET: Details
         [Authorize(Roles = "Admin, Professor, Applicant")]
         public async Task<IActionResult> Details(string? id)
         {
@@ -158,58 +159,45 @@ namespace TAApplication.Controllers
         // POST: Applications/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [Authorize(Roles = "Admin,Applicant")]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DegreePursuing,Department,GPA,DesiredHours,AvailableBeforeSemester,SemestersCompleted,PersonalStatement,TransferSchool,LinkedIn,ResumeName,CreationDate,ModificationDate")] Application application)
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,DegreePursuing,Department,GPA,DesiredHours,AvailableBeforeSemester,SemestersCompleted,PersonalStatement,TransferSchool,LinkedIn,ResumeName,CreationDate,ModificationDate")] Application application)
         {
-            if (id != application.Id)
+            if (id == null) { return BadRequest(); }
+            var applicationToUpdate = _context.Applications
+                                    .Where(o => o.Id == id).Include(o => o.TAUser).FirstOrDefault();
+            if (applicationToUpdate != null)
             {
-                return NotFound();
-            }
-            ModelState.Remove("TAUser");
+                ModelState.Remove("TAUser");
+                TAUser user = await _um.GetUserAsync(User);
+                applicationToUpdate.TAUser = user;
 
-
-            //TODO: Fix this error
-            //Issue: querying the user causes it to be tracked already which causes the error
-
-            //Variation 1: causes error
-            TAUser user = (await _context.Applications.Include("TAUser").FirstAsync(m => m.Id == id)).TAUser; //Gets user associated with application
-            application.TAUser = user;
-
-
-            //Variation 2 (Fixes it but this I assume this is not intended way,
-            //as it defeats the purpose of Professor Germains tracking methods in ApplicationDbContext.cs)
-            /* TAUser user = (await _context.Applications.AsNoTracking().Include("TAUser")
-                 .FirstAsync(m => m.Id == id)).TAUser;
-               application.TAUser = user;
-               application.ModificationDate = DateTime.Now;
-            */
-
-            if (ModelState.IsValid)
-            {
-                try
-
+                if (await TryUpdateModelAsync<Application>(applicationToUpdate, "",
+                    s => s.DegreePursuing,
+                    s => s.Department,
+                    s => s.GPA,
+                    s => s.DesiredHours,
+                    s => s.AvailableBeforeSemester,
+                    s => s.SemestersCompleted,
+                    s => s.PersonalStatement,
+                    s => s.TransferSchool,
+                    s => s.LinkedIn,
+                    s => s.ResumeName))
                 {
-                    //For variation 2
-                    /*_context.Entry(user).State = EntityState.Unchanged;*/
-                    _context.Update(application);
-
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ApplicationExists(application.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.SaveChanges();
+                        return RedirectToAction(nameof(Details), new { id = applicationToUpdate.TAUser.Id });
                     }
-                    else
+                    catch (DataException)
                     {
-                        throw;
+                        // manage error logging
                     }
+                    return View(applicationToUpdate);
                 }
-                return RedirectToAction(nameof(Details), new { id = application.TAUser.Id });
             }
-            return View(application);
+            return BadRequest();
         }
 
         // GET: Applications/Delete/5
@@ -275,8 +263,7 @@ namespace TAApplication.Controllers
             var application = await _context.Applications
                 .FirstOrDefaultAsync(a => a.Id == appID);
             var user = _um.GetUserAsync(User).Result;
-            string new_filename = Path.GetRandomFileName();
-            string path = Path.Combine(_configuration["FilePath"], new_filename);
+
             //Check if there is an application
             if (application == null)
             {
@@ -296,6 +283,7 @@ namespace TAApplication.Controllers
                 return View("Details", application);
             }
 
+            // Check file size
             var file = files.First();
             int file_size = 10000000;
             if (file.Length > file_size || file.Length <= 0)
@@ -304,6 +292,19 @@ namespace TAApplication.Controllers
                 return View("Details", application);
             }
 
+            //Create New FileName and Path
+            string new_filename;
+            do
+            {
+                new_filename = Path.GetRandomFileName();
+                new_filename = new_filename.Remove(new_filename.IndexOf('.'));
+                new_filename += file.FileName.Substring(file.FileName.IndexOf('.'));
+            }
+            while (_context.Applications.Any(e => e.ResumeName != null && e.ResumeName.Equals(new_filename)));
+            string path = Path.Combine(_configuration["FilePath"], new_filename);
+
+
+            // Save File
             if (category.Equals("resume"))
             {
                 string pattern = "(.*\\.)(pdf)$";
@@ -313,6 +314,8 @@ namespace TAApplication.Controllers
                     {
                         await file.CopyToAsync(stream);
                     }
+                    application.ResumeName = new_filename;
+                    _context.SaveChanges();
                     return RedirectToAction(nameof(Details), new { id = user.Id });
                 }
 
@@ -326,6 +329,8 @@ namespace TAApplication.Controllers
                     {
                         await file.CopyToAsync(stream);
                     }
+                    application.ProfilePicName = new_filename;
+                    _context.SaveChanges();
                     return RedirectToAction(nameof(Details), new { id = user.Id });
                 }
 

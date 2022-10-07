@@ -42,7 +42,7 @@ namespace TAApplication.Models
         [StringLength(50000)]
         [Display(Name = "Personal Statement:", ShortName = "PersonalStatement", Prompt = "Some information about your self.", Description = "This is a place where you can share who you are outside of the gpa. Let us know anything you deem important.")]
         [DataType(DataType.MultilineText)]
-        [DisplayFormat(NullDisplayText ="Not provided")]
+        [DisplayFormat(NullDisplayText ="Not Provided")]
         public string? PersonalStatement { get; set; }
 
         [Display(Name = "School Transferred From:", ShortName = "Transfer School", Prompt = "University of California Berkeley", Description = "Please let us know the school that you have transferred from if applicable")]
@@ -59,6 +59,11 @@ namespace TAApplication.Models
         [DisplayFormat(NullDisplayText = "Not Provided")]
         [RegularExpression("(.*\\.)(pdf)$", ErrorMessage ="File must be a pdf")]
         public string? ResumeName { get; set; }
+
+        [Display(Name = "Profile Picture Upload:", ShortName = "Profile Upload", Prompt = "Insert a profile picture", Description = "Please input your profile picture")]
+        [DisplayFormat(NullDisplayText = "Not Provided")]
+        [RegularExpression("(.*\\.)(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF)$", ErrorMessage = "File must be a jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF")]
+        public string? ProfilePicName { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]

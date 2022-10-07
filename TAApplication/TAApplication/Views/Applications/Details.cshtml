@@ -22,6 +22,7 @@ This file contains the HTML for the Application Details Page which displays an a
 
 @{
     ViewData["Title"] = "Details";
+    bool canEdit = User.IsInRole("Admin") || (UserManager.GetUserId(User) == Model?.TAUser.Id);
 }
 
 
@@ -32,7 +33,45 @@ This file contains the HTML for the Application Details Page which displays an a
 <div class="container">
     <div class="row">
         <div class="col-lg-6">
-            <img src="~/default_pfp.png" alt="User's self portrait" id="user_portrait" />
+            @if(Model?.ProfilePicName != null)
+            {   <div class="profile-pic">
+                    @{
+                        string path = "/uploads/" + Model.ProfilePicName;
+                        <img src= @path alt="User's self portrait" id="user_portrait" />
+                     }
+                </div>
+                @if(canEdit)
+                {
+                    <form method="post"
+                  enctype="multipart/form-data"
+                  asp-controller="Applications"
+                  asp-action="FileUpload">
+                    <input type="file" name="files" multiple />
+                    <input type="submit" value="Upload Profile Photo" />
+                    <input hidden name="category" value="photo" />
+                    <input hidden name="appID" value="@Model.Id" />
+                </form>
+                }
+            }
+            else
+            {
+                <div class="profile-pic">
+                    <img src="~/default_pfp.png" alt="User's self portrait" id="user_portrait" />
+                </div>
+
+                if (canEdit)
+                {
+                    <form method="post"
+                  enctype="multipart/form-data"
+                  asp-controller="Applications"
+                  asp-action="FileUpload">
+                        <input type="file" name="files" multiple />
+                        <input type="submit" value="Upload Profile Photo" />
+                        <input hidden name="category" value="photo" />
+                        <input hidden name="appID" value="@Model.Id" />
+                    </form>
+                }
+            }
             <div class="row">
                 <div class="col-lg-6">
                     <b id="name-label">Name:</b>
@@ -69,7 +108,6 @@ This file contains the HTML for the Application Details Page which displays an a
 
         </div>
         <div class="col-lg-6">
-            <form>
                 <div id="application-container" class="container">
                     <div class="row">
                         <div class="col-lg-5 prompt-label">
@@ -156,7 +194,38 @@ This file contains the HTML for the Application Details Page which displays an a
                             <label for="resume-label" class="form-label">@Html.DisplayNameFor(model=>model.ResumeName)</label>
                         </div>
                         <div class="col-lg-7 data-field-col">
-                            <p id="resume">@Html.DisplayFor(model=>model.ResumeName)</a>
+                            @if (Model.ResumeName != null)
+                            {
+                                string path = "/uploads/" + Model.ResumeName;
+                                <a href=@path> Resume </a>
+                                if (canEdit)
+                                {
+                                    <form method="post"
+                                      enctype="multipart/form-data"
+                                      asp-controller="Applications"
+                                      asp-action="FileUpload">
+                                        <input type="file" name="files" multiple />
+                                        <input type="submit" value="Replace PDF Resume" />
+                                        <input hidden name="category" value="resume" />
+                                        <input hidden name="appID" value="@Model.Id" />
+                                    </form>
+                                 }
+                            }
+                            else
+                            {
+                                if(canEdit)
+                                {
+                                    <form method="post"
+                                      enctype="multipart/form-data"
+                                      asp-controller="Applications"
+                                      asp-action="FileUpload">
+                                        <input type="file" name="files" multiple />
+                                        <input type="submit" value="Upload PDF Resume" />
+                                        <input hidden name="category" value="resume" />
+                                        <input hidden name="appID" value="@Model.Id" />
+                                    </form>
+                                }
+                            }
                         </div>
                     </div>
                     <div class="row">
@@ -167,41 +236,32 @@ This file contains the HTML for the Application Details Page which displays an a
                             <p id="resume">@Html.DisplayFor(model=>model.ModificationDate)</a>
                         </div>
                     </div>
-
-
                 </div>
-            </form>
+
         </div>
     </div>
 </div>
 
-
-
-<form method="post"                                              
-enctype="multipart/form-data" 
-asp-controller="Applications" 
-asp-action="FileUpload">
-                <input type="submit" value="Upload PDF Resume" />
-                <br/>
-                <input type="file" name="files" multiple />
-                <input hidden name="category" value="resume" /> 
-                <input hidden name="appID" value="@Model.Id" />
-</form>
 <p class="text-red">
     @ViewData["ErrorMessage"]
 </p>
 
-<div>
+<hr />
+<div class="center">
     
-    @if (User.IsInRole("Admin") || (UserManager.GetUserId(User) == Model?.TAUser.Id))
+    @if (canEdit)
     {
-        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
-        <a asp-action="Delete" asp-route-id="@Model?.Id">Delete</a>
-    }
+        <div class="padding">
+            <a class="btn btn-danger btn-md" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        </div>
+        <div class="padding">
+            <a class="btn btn-danger btn-md" asp-action="Delete" asp-route-id="@Model?.Id">Delete</a>
+        </div>
+    }   
     
 
     @if (User.IsInRole("Professor")|| User.IsInRole("Admin"))
     {
-        <a asp-action="List" asp-route-id="@Model?.Id">Back to List</a>
+        <a class="btn btn-danger btn-md" asp-action="List" asp-route-id="@Model?.Id">Back to List</a>
     }
 </div>
