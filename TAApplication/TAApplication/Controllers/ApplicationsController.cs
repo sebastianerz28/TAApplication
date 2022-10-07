@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,13 +22,16 @@ namespace TAApplication.Controllers
         private ApplicationDbContext _context;
         private readonly ILogger<ApplicationsController> _logger;
         private UserManager<TAUser> _um;
+        IConfiguration _configuration;
+
 
         public ApplicationsController(ILogger<ApplicationsController> logger, ApplicationDbContext DB,
-            UserManager<TAUser> um)
+            UserManager<TAUser> um, IConfiguration config)
         {
             _logger = logger;
             _context = DB;
             _um = um;
+            _configuration = config;
         }
 
         // GET: Applications
@@ -47,13 +51,14 @@ namespace TAApplication.Controllers
         [Authorize(Roles = "Admin, Professor, Applicant")]
         public async Task<IActionResult> Details(string? id)
         {
-            /*if (_um.GetUserAsync(User).Result.Unid != id && (await _um.GetRolesAsync(_um.GetUserAsync(User).Result)).First().Equals("Applicant"))
-            {
-                return View("NotAuthorized");
-            }*/
             if (id == null || _context.Applications == null)
             {
                 return NotFound();
+            }
+
+            if(id != _um.GetUserAsync(User).Result.Id)
+            {
+                return View("NotAuthorized");
             }
 
 
@@ -262,5 +267,72 @@ namespace TAApplication.Controllers
         {
             return _context.Applications.Any(e => e.Id == id);
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> FileUpload(List<IFormFile> files, string category, int appID)
+        {
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.Id == appID);
+            var user = _um.GetUserAsync(User).Result;
+            string new_filename = Path.GetRandomFileName();
+            string path = Path.Combine(_configuration["FilePath"], new_filename);
+            //Check if there is an application
+            if (application == null)
+            {
+                return BadRequest();
+            }
+
+            //Check if user id's match or if user is an admin
+            if (application.TAUser.Id != user.Id && !_um.IsInRoleAsync(user, "admin").Result)
+            {
+                ViewData["ErrorMessage"] = "Must be Authorized to upload this file to this PAGE!";
+                return View("Details", application);
+            }
+
+            if (files.Count != 1)
+            {
+                ViewData["ErrorMessage"] = "Please choose one file!";
+                return View("Details", application);
+            }
+
+            var file = files.First();
+            int file_size = 10000000;
+            if (file.Length > file_size || file.Length <= 0)
+            {
+                ViewData["ErrorMessage"] = "Please check your file size it may be too big or too small!";
+                return View("Details", application);
+            }
+
+            if (category.Equals("resume"))
+            {
+                string pattern = "(.*\\.)(pdf)$";
+                if (Regex.IsMatch(file.FileName, pattern))
+                {
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    return RedirectToAction(nameof(Details), new { id = user.Id });
+                }
+
+            }
+            else if(category.Equals("photo"))
+            {
+                string pattern = "(.*\\.)(jpg|jpeg|png|gif|JPG|JPEG|PNG|GIF)$";
+                if (Regex.IsMatch(file.FileName, pattern))
+                {
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    return RedirectToAction(nameof(Details), new { id = user.Id });
+                }
+
+            }
+
+            return BadRequest();
+        }
+
     }
 }

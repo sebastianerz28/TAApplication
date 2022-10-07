@@ -79,3 +79,7 @@
 #application-container{
     max-width:800px;
 }
+
+.text-red{
+    color: red;
+}

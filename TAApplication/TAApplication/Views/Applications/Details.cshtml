@@ -1,4 +1,16 @@
-﻿@model TAApplication.Models.Application
+﻿<!--
+Author:    Sebastian Ramirez
+Partner:   Noah Carlson
+Date:      Sept 27, 2022
+Course:    CS 4540, University of Utah, School of Computing
+Copyright: CS 4540 and Noah Carlson, Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
+I, Sebastian Ramirez and Noah Carlson, certify that I wrote this code from scratch and did not copy it in part or whole from
+another source.  Any references used in the completion of the assignment are cited in my README file.
+File Contents
+This file contains the HTML for the Application Details Page which displays an applicants details
+-->
+
+@model TAApplication.Models.Application
 @using Microsoft.AspNetCore.Identity
 @using TAApplication.Areas.Data
 @using TAApplication.Data
@@ -12,24 +24,6 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-
-
-
-
-
-<!--
-Author:    Sebastian Ramirez
-Partner:   Noah Carlson
-Date:      Sept 27, 2022
-Course:    CS 4540, University of Utah, School of Computing
-Copyright: CS 4540 and Noah Carlson, Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
-I, Sebastian Ramirez and Noah Carlson, certify that I wrote this code from scratch and did not copy it in part or whole from
-another source.  Any references used in the completion of the assignment are cited in my README file.
-File Contents
-This file contains the HTML for the Application Details Page which displays an applicants details
--->
 
 <div id="Application-page-title-wrapper">
     <h1 id="Application-page-title">@Html.DisplayFor(model=>model.TAUser.Name)'s (@Html.DisplayFor(model=>model.TAUser.Unid)) Application</h1>
@@ -183,11 +177,19 @@ This file contains the HTML for the Application Details Page which displays an a
 
 
 
-
-
-
-
-
+<form method="post"                                              
+enctype="multipart/form-data" 
+asp-controller="Applications" 
+asp-action="FileUpload">
+                <input type="submit" value="Upload PDF Resume" />
+                <br/>
+                <input type="file" name="files" multiple />
+                <input hidden name="category" value="resume" /> 
+                <input hidden name="appID" value="@Model.Id" />
+</form>
+<p class="text-red">
+    @ViewData["ErrorMessage"]
+</p>
 
 <div>
     
