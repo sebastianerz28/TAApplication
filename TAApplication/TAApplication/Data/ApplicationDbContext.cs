@@ -183,30 +183,34 @@ namespace TAApplication.Data
         /// </summary>
         private void AddTimestamps()
         {
+            //Gets entries that were modified
             var entities = ChangeTracker.Entries()
                 .Where(x => x.Entity is ModificationTracking
                         && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
             var currentUsername = "";
-
+            //If database is being seeded the Database is modifying
             if (_httpContextAccessor.HttpContext == null) // happens during startup/initialization code
             {
                 currentUsername = "DBSeeder";
             }
+            //If a user is changing get the username
             else
             {
                 currentUsername = _httpContextAccessor.HttpContext.User.Identity?.Name;
             }
-
+            //IF a user is not logged in
             currentUsername ??= "Sadness"; // JIM: compound assignment magic... test for null, and if so, assign value
-
+            //Loop over all entries
             foreach (var entity in entities)
             {
+                //If entry is being created set the Createed values
                 if (entity.State == EntityState.Added)
                 {
                     ((ModificationTracking)entity.Entity).CreationDate = DateTime.UtcNow;
                     ((ModificationTracking)entity.Entity).CreatedBy = currentUsername;
                 }
+                //Set Modification dates
                 ((ModificationTracking)entity.Entity).ModificationDate = DateTime.UtcNow;
                 ((ModificationTracking)entity.Entity).ModifiedBy = currentUsername;
             }
