@@ -17,6 +17,7 @@
 
 @{
     ViewData["Title"] = "Applicants Overview";
+    
 }
 
 <h1 class="center">TA Applicants Overview</h1>
@@ -33,7 +34,7 @@
             </tr>
             <tr>
                 <td>Average Gpa of Applicants:</td>
-                <td class="Applicant-overview-data">0</td>
+                <td class="Applicant-overview-data">@string.Format("{0:N2}", ViewData["gpaAvg"])</td>
             </tr>
             <tr>
                 <td>Number of Unhired TA's:</td>

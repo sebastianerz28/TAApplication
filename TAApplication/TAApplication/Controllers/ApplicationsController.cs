@@ -74,6 +74,17 @@ namespace TAApplication.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
+            var gpaQuery = from a in _context.Applications
+                           select a.GPA;
+            if (gpaQuery.Any())
+            {
+                double gpaAvg = 0;
+                foreach (var item in gpaQuery)
+                    gpaAvg += item;
+                gpaAvg = gpaAvg / gpaQuery.Count();
+                ViewData["gpaAvg"]=gpaAvg;
+
+            }
             return View(await _context.Applications.Include("TAUser").ToArrayAsync());
         }
         // GET: Details
