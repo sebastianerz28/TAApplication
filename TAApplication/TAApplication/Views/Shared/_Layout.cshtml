@@ -85,6 +85,12 @@
                                     <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="Index">Applications Overview</a>
                                 </li>
                             }
+                            @if (true)
+                            {
+                                <li>
+                                    <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="List">View Applications</a>
+                                </li>
+                            }
 
                         }
                         @if (SignInManager.IsSignedIn(User))
@@ -117,9 +123,6 @@
                                             Admin
                                             <li>
                                                 <a class="dropdown-item remove-bullet" asp-controller="Admin" asp-action="Index">User Roles</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item remove-bullet" asp-controller="Applications" asp-action="List">Applicant List</a>
                                             </li>
                                         </ul>
                                     </li>
