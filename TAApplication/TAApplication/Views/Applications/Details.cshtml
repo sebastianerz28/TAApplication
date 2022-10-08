@@ -249,6 +249,10 @@ This file contains the HTML for the Application Details Page which displays an a
 <hr />
 <div class="center">
     
+    <div class="padding">
+        <p>Last Modified:</p>
+        <p id="last-modified">@Html.DisplayFor(model=>model.ModificationDate)</p>
+    </div>
     @if (canEdit)
     {
         <div class="padding">
