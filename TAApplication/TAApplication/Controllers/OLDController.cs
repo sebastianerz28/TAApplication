@@ -12,7 +12,7 @@
  *
  * File Contents
  *
- *  This file serves as the controller for the home page returning appropriate views for other pages
+ *  This file serves as the controller to access the old static handwritten html pages
  *    
  */
 

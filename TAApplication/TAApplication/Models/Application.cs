@@ -1,4 +1,21 @@
-﻿
+﻿/**
+ * Author:    Sebastian Ramirez
+ * Partner:   Noah Carlson
+ * Date:      10/8/2022
+ * Course:    CS 4540, University of Utah, School of Computing
+ * Copyright: CS 4540 and [Your Name(s)] - This work may not be copied for use in Academic Coursework.
+ *
+ * I, Sebastian Ramirez and Noah Carlson, certify that I wrote this code from scratch and did 
+ * not copy it in part or whole from another source.  Any references used 
+ * in the completion of the assignment are cited in my README file and in
+ * the appropriate method header.
+ *
+ * File Contents
+ *
+ *   This file serves as the model relating to an application contains all relevant fields.
+ */
+
+
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Markup;
 using TAApplication.Areas.Data;

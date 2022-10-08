@@ -1,4 +1,21 @@
-﻿using System;
+﻿/**
+ * Author:    Sebastian Ramirez
+ * Partner:   Noah Carlson
+ * Date:      10/8/2022
+ * Course:    CS 4540, University of Utah, School of Computing
+ * Copyright: CS 4540 and [Your Name(s)] - This work may not be copied for use in Academic Coursework.
+ *
+ * I, Sebastian Ramirez and Noah Carlson, certify that I wrote this code from scratch and did 
+ * not copy it in part or whole from another source.  Any references used 
+ * in the completion of the assignment are cited in my README file and in
+ * the appropriate method header.
+ *
+ * File Contents
+ *
+ *    This file serves as the controller to applications gets and retrieves data from the database relating to applications
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -36,6 +53,12 @@ namespace TAApplication.Controllers
         }
 
         // GET: Applications
+
+        /// <summary>
+        /// Get the list of all applicants.
+        /// Only accesible to admins and professors
+        /// </summary>
+        /// <returns>Returns the view along with the data of the applicants</returns>
         [Authorize(Roles = "Admin, Professor")]
         public async Task<IActionResult> List()
         {
@@ -43,12 +66,22 @@ namespace TAApplication.Controllers
         }
 
         // GET: Applications
+        /// <summary>
+        /// Gets the home page for Applications
+        /// Only accesible to admins
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Applications.Include("TAUser").ToArrayAsync());
         }
         // GET: Details
+        /// <summary>
+        /// Gets the details to an application
+        /// </summary>
+        /// <param name="id">ID of the application</param>
+        /// <returns>returns the view and application to be displayed</returns>
         [Authorize(Roles = "Admin, Professor, Applicant")]
         public async Task<IActionResult> Details(string? id)
         {
@@ -57,7 +90,7 @@ namespace TAApplication.Controllers
                 return NotFound();
             }
 
-            if(id != _um.GetUserAsync(User).Result.Id)
+            if (id != _um.GetUserAsync(User).Result.Id)
             {
                 return View("NotAuthorized");
             }
@@ -80,25 +113,11 @@ namespace TAApplication.Controllers
             return View(await application.FirstOrDefaultAsync());
         }
 
-        // GET: Applications/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.Applications == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var application = await _context.Applications
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (application == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(application);
-        //}
-
         // GET: Applications/Create
+        /// <summary>
+        /// Gets the page to create an application
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Create()
         {
             return View();
@@ -107,9 +126,16 @@ namespace TAApplication.Controllers
         // POST: Applications/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+        /// <summary>
+        /// Creates an application and stores it in the Database
+        /// </summary>
+        /// <param name="files"></param>
+        /// <param name="application"> Application object created from user input </param>
+        /// <returns>Redirects to details if creation was a success shows error otherwise</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DegreePursuing,Department,GPA,DesiredHours,AvailableBeforeSemester,SemestersCompleted,PersonalStatement,TransferSchool,LinkedIn,ResumeName,CreationDate,ModificationDate")] Application application)
+        public async Task<IActionResult> Create(List<IFormFile> files, [Bind("Id,DegreePursuing,Department,GPA,DesiredHours,AvailableBeforeSemester,SemestersCompleted,PersonalStatement,TransferSchool,LinkedIn,ResumeName,ProfilePicName,CreationDate,ModificationDate")] Application application)
         {
 
             //Finds application matching with matching userID
@@ -129,6 +155,18 @@ namespace TAApplication.Controllers
                     application.ModificationDate = date;
                     _context.Add(application);
                     await _context.SaveChangesAsync();
+                    var appID = from a in _context.Applications.Include("TAUser")
+                                where a.TAUser.Id == user.Id
+                                select a.Id;
+                    if (application.ProfilePicName != null)
+                    {
+                        await FileUpload(files, "resume", appID.First());
+                    }
+                    if (application.ResumeName != null)
+                    {
+                        await FileUpload(files, "photo", appID.First());
+                    }
+
                     return RedirectToAction(nameof(Details), new { id = user.Id });
                 }
             }
@@ -138,6 +176,11 @@ namespace TAApplication.Controllers
         }
 
         // GET: Applications/Edit/5
+        /// <summary>
+        /// Gets the application to be edited 
+        /// </summary>
+        /// <param name="id">ID of the Application</param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Applications == null)
@@ -159,6 +202,12 @@ namespace TAApplication.Controllers
         // POST: Applications/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Edits the application based on the updated user input
+        /// </summary>
+        /// <param name="id">ID of the application</param>
+        /// <param name="application">Application model object created from user input</param>
+        /// <returns>Redirects to details if success, bad request otherwise</returns>
         [Authorize(Roles = "Admin,Applicant")]
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
@@ -201,6 +250,11 @@ namespace TAApplication.Controllers
         }
 
         // GET: Applications/Delete/5
+        /// <summary>
+        /// Gets the delete page of the specified applicaiton
+        /// </summary>
+        /// <param name="id">ID of the application</param>
+        /// <returns>The delete page with the application fields, NotFound if the no ID matching the provided ID could be found</returns>
         [Authorize(Roles = "Admin, Applicant")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -233,10 +287,16 @@ namespace TAApplication.Controllers
         }
 
         // POST: Applications/Delete/5
+        /// <summary>
+        /// Deletes an application from the Database
+        /// </summary>
+        /// <param name="id">ID of the application to be deleted</param>
+        /// <returns> Redirects to homepage of website </returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            
             if (_context.Applications == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Applications'  is null.");
@@ -248,14 +308,20 @@ namespace TAApplication.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         private bool ApplicationExists(int id)
         {
             return _context.Applications.Any(e => e.Id == id);
         }
-
+        /// <summary>
+        /// Uploads a file to the server and stores the name in the databse
+        /// </summary>
+        /// <param name="files">File to be uploaded</param>
+        /// <param name="category">Category of the file</param>
+        /// <param name="appID">ID of the application to associate the file with</param>
+        /// <returns>Redirects to details if success, returns bad request otherwise</returns>
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> FileUpload(List<IFormFile> files, string category, int appID)
@@ -317,7 +383,7 @@ namespace TAApplication.Controllers
                     application.ResumeName = new_filename;
                     _context.SaveChanges();
                     return RedirectToAction(nameof(Details), new { id = user.Id });
-                }
+                }   
 
             }
             else if(category.Equals("photo"))
@@ -330,9 +396,9 @@ namespace TAApplication.Controllers
                         await file.CopyToAsync(stream);
                     }
                     application.ProfilePicName = new_filename;
-                    _context.SaveChanges();
+                _context.SaveChanges();
                     return RedirectToAction(nameof(Details), new { id = user.Id });
-                }
+            }
 
             }
 
