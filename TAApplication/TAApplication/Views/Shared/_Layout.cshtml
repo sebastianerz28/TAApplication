@@ -85,7 +85,7 @@
                                     <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="Index">Applications Overview</a>
                                 </li>
                             }
-                            @if (true)
+                            @if (User.IsInRole("Professor"))
                             {
                                 <li>
                                     <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="List">View Applications</a>
