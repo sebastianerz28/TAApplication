@@ -82,7 +82,7 @@ namespace TAApplication.Controllers
                 foreach (var item in gpaQuery)
                     gpaAvg += item;
                 gpaAvg = gpaAvg / gpaQuery.Count();
-                ViewData["gpaAvg"]=gpaAvg;
+                    ViewData["gpaAvg"]=gpaAvg;
 
             }
             return View(await _context.Applications.Include("TAUser").ToArrayAsync());
@@ -129,6 +129,7 @@ namespace TAApplication.Controllers
         /// Gets the page to create an application
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles ="Applicant")]
         public IActionResult Create()
         {
             return View();
@@ -144,6 +145,7 @@ namespace TAApplication.Controllers
         /// <param name="files"></param>
         /// <param name="application"> Application object created from user input </param>
         /// <returns>Redirects to details if creation was a success shows error otherwise</returns>
+        [Authorize(Roles = "Applicant")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(List<IFormFile> files, [Bind("Id,DegreePursuing,Department,GPA,DesiredHours,AvailableBeforeSemester,SemestersCompleted,PersonalStatement,TransferSchool,LinkedIn,ResumeName,ProfilePicName,CreationDate,ModificationDate")] Application application)
@@ -192,21 +194,31 @@ namespace TAApplication.Controllers
         /// </summary>
         /// <param name="id">ID of the Application</param>
         /// <returns></returns>
+        [Authorize(Roles ="Admin, Applicant")]
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null || _context.Applications == null)
             {
                 return NotFound();
             }
-
+            
 
             var query = from a in _context.Applications.Include("TAUser")
                         where a.Id == id
                         select a;
+
+
             if (query.Count() < 1)
             {
                 return NotFound();
             }
+
+            if (query.First().TAUser.Id != _um.GetUserAsync(User).Result.Id && !_um.IsInRoleAsync(_um.GetUserAsync(User).Result, "Admin").Result)
+            {
+                return View("NotAuthorized");
+            }
+
             return View(await query.FirstOrDefaultAsync());
         }
 
@@ -227,8 +239,16 @@ namespace TAApplication.Controllers
             if (id == null) { return BadRequest(); }
             var applicationToUpdate = _context.Applications
                                     .Where(o => o.Id == id).Include(o => o.TAUser).FirstOrDefault();
+
+            
+
+
             if (applicationToUpdate != null)
             {
+                if (applicationToUpdate.TAUser.Id != _um.GetUserAsync(User).Result.Id && !_um.IsInRoleAsync(_um.GetUserAsync(User).Result, "Admin").Result)
+                {
+                    return View("NotAuthorized");
+                }
                 ModelState.Remove("TAUser");
                 TAUser user = await _um.GetUserAsync(User);
                 applicationToUpdate.TAUser = user;

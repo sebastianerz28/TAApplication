@@ -9,6 +9,8 @@
   File Contents
      This file contains the HTML for the index home page
 -->
+@model TAApplication.Models.Application
+
 
 @{
     ViewData["Title"] = "Home Page";
@@ -23,7 +25,10 @@
                     <p class="col-lg-8 fs-4">
                         Teaching Assistants and Mentees make a huge difference in the lives of students. Many of you are here applying to TA because you were inspired by a past TA. Maybe next year a student will choose to "pay it forward" because of your efforts.
                     </p>
-                    <a class="btn btn-lg bg-danger btn-primary" asp-area="" asp-controller="Applications" asp-action="Create">Start</a>
+                    @if(User.IsInRole("Applicant"))
+                    {
+                        <a class="btn btn-lg bg-danger btn-primary" asp-area="" asp-controller="Applications" asp-action="Create">Start</a>
+                    }
                 </div>
                 <div class="col-lg-6" id="ta-app-img">
                     <img class="img-fluid" src="~/teachingAssistants.jpg" />
