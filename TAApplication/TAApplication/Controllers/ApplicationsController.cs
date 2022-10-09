@@ -101,7 +101,7 @@ namespace TAApplication.Controllers
                 return NotFound();
             }
 
-            if (id != _um.GetUserAsync(User).Result.Id)
+            if (id != _um.GetUserAsync(User).Result.Id && !_um.IsInRoleAsync(_um.GetUserAsync(User).Result,"Admin").Result)
             {
                 return View("NotAuthorized");
             }
