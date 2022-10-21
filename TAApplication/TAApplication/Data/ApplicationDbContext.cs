@@ -44,6 +44,9 @@ namespace TAApplication.Data
             modelBuilder.Entity<Course>().ToTable("Courses");
         }
 
+        /// <summary>
+        /// Seeds the Users database with 5 users with 3 different roles
+        /// </summary>
         public async Task InitializeUsers(UserManager<TAUser> um, RoleManager<IdentityRole> rm)
         {
             if (rm.Roles.Count() != 3)
@@ -111,17 +114,124 @@ namespace TAApplication.Data
 
         }
 
+        /// <summary>
+        /// Seeds the Courses database with 5 courses
+        /// </summary>
+        /// <returns></returns>
         public async Task InitializeCourses()
         {
             if(Courses.Count() < 5)
             {
                 Course c1 = new Course
                 {
-
+                    SemesterOffered = "spring",
+                    YearOffered = "2023",
+                    Title = "Intro to Object Oriented Programming",
+                    Department = "CS",
+                    Number = "1400",
+                    Section = "001",
+                    Description = "This course is an introduction to the engineering and mathematical skills required to effectively program computers and is designed for students with no prior programming experience.",
+                    ProfessorUnid = "U0123729",
+                    ProfessorName = "David Johnson",
+                    Start = TimeSpan.Parse("01:25"),
+                    End = TimeSpan.Parse("02:45"),
+                    DaysOffered = "Mo/We",
+                    Location = "S BEH AUD",
+                    CreditHours = 4,
+                    Enrollment = 0,
+                    Note = "This course needs more TAs"
                 };
+                Courses.Add(c1);
+                
+                Course c2 = new Course
+                {
+                    SemesterOffered = "Spring",
+                    YearOffered = "2023",
+                    Title = "Data Structures",
+                    Department = "CS",
+                    Number = "2420",
+                    Section = "001",
+                    Description = "This course provides an introduction to the problem of engineering computational efficiency into programs. Students will learn about classical algorithms (including sorting, searching, and graph traversal), data structures (including stacks, queues, linked lists, trees, hash tables, and graphs), and analysis of program space and time requirements. Students will complete extensive programming exercises that require the application of elementary techniques from software engineering.",
+                    ProfessorUnid = "u0834567",
+                    ProfessorName = "Erin Parker",
+                    Start = TimeSpan.Parse("08:00"),
+                    End = TimeSpan.Parse("09:00"),
+                    DaysOffered = "Tu/Th",
+                    Location = "S BEH AUD",
+                    CreditHours = 4,
+                    Enrollment = 200,
+                };
+                Courses.Add(c2);
+
+                Course c3 = new Course
+                {
+                    SemesterOffered = "Spring",
+                    YearOffered = "2023",
+                    Title = "Software Practice I",
+                    Department = "CS",
+                    Number = "3500",
+                    Section = "001",
+                    Description = "Practical exposure to the process of creating large software systems, including requirements specifications, design, implementation, testing, and maintenance. Emphasis on software process, software tools (debuggers, profilers, source code repositories, test harnesses), software engineering techniques (time management, code, and documentation standards, source code management, object-oriented analysis and design), and team development practice. Much of the work will be in groups and will involve modifying preexisting software systems.",
+                    ProfessorUnid = "u0834563",
+                    ProfessorName = "Daniel Kopta",
+                    Start = TimeSpan.Parse("10:00"),
+                    End = TimeSpan.Parse("11:00"),
+                    DaysOffered = "Tu/Th",
+                    Location = "WEB L105",
+                    CreditHours = 4,
+                    Enrollment = 140,
+                };
+                Courses.Add(c3);
+
+                Course c4 = new Course
+                {
+                    SemesterOffered = "Spring",
+                    YearOffered = "2023",
+                    Title = "Software Practice II",
+                    Department = "CS",
+                    Number = "3505",
+                    Section = "001",
+                    Description = "An in-depth study of traditional software development (using UML) from inception through implementation. The entire class is team-based, and will include a project that uses an agile process.",
+                    ProfessorUnid = "u0935641",
+                    ProfessorName = "David Johnson",
+                    Start = TimeSpan.Parse("12:25"),
+                    End = TimeSpan.Parse("01:45"),
+                    DaysOffered = "Tu/Th",
+                    Location = "WEB L104",
+                    CreditHours = 3,
+                    Enrollment = 50,
+                };
+                Courses.Add(c4);
+
+                Course c5 = new Course
+                {
+                    SemesterOffered = "Spring",
+                    YearOffered = "2023",
+                    Title = "Computer Systems",
+                    Department = "CS",
+                    Number = "4400",
+                    Section = "001",
+                    Location = "FMAB AUD",
+                    Description = "Introduction to computer systems from a programmer's point of view.  Machine level representations of programs, optimizing program performance, memory hierarchy, linking, exceptional control flow, measuring program performance, virtual memory, concurrent programming with threads, network programming.",
+                    ProfessorUnid = "u0834563",
+                    ProfessorName = "Mu Zhang",
+                    Start = TimeSpan.Parse("11:50"),
+                    End = TimeSpan.Parse("1:10"),
+                    DaysOffered = "M/W",
+                    CreditHours = 4,
+                    Enrollment = 100,
+                    Note = "This course requires 6 TAs"
+                };
+                Courses.Add(c5);
+
+                SaveChanges();
             }
         }
 
+        /// <summary>
+        /// Seeds the Applications database with 2 applications
+        /// </summary>
+        /// <returns></returns>
         public async Task InitializeApplications(UserManager<TAUser> um)
         {
             if (Applications.Count() < 2)

@@ -119,7 +119,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Note)
             </td>
-            if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+            @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
             {
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
