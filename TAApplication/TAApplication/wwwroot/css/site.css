@@ -87,3 +87,38 @@
 .padding{
     padding: 10px;
 }
+
+
+.red-table-header {
+    text-align: center;
+}
+
+.red-table {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.red-table-header-row {
+    background-color: #c00;
+}
+
+.red-table-link {
+    color: black;
+}
+.red-table-link:hover {
+    color: red;
+}
+
+.red-table-data {
+    width: 14%;
+}
+
+.red-header-data {
+    padding: 0;
+    color: white;
+}
+
+table {
+    border-collapse: collapse;
+}

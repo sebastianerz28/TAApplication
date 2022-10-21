@@ -3,69 +3,75 @@
 @using TAApplication.Areas.Data
 @inject UserManager<TAUser> UserManager
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Courses";
 }
 
-<h1>Index</h1>
+<h1 class="center text-decoration-underline">Courses</h1>
 @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
 {
-    <p>
-        <a asp-action="Create">Create New</a>
+    <p class="center">
+        <a class="btn btn-md bg-danger btn-primary" asp-area="" asp-controller="Courses" asp-action="Create">Create New</a>
     </p>
 }
-<table class="table">
+<table id="courses-table" class="display table cell-border compact">
     <thead>
-        <tr>
-            <th>
+        <tr class="red-table-header-row">
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.SemesterOffered)
             </th>
-            <th>
+            <th class ="red-header-data">
                 @Html.DisplayNameFor(model => model.YearOffered)
             </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.Department)
             </th>
-            <th>
+            <th class ="red-header-data">
                 @Html.DisplayNameFor(model => model.Number)
             </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.Section)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.ProfessorUnid)
             </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.ProfessorName)
             </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.Start)
             </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.End)
             </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.DaysOffered)
             </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.Location)
             </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.CreditHours)
             </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.Enrollment)
             </th>
-            <th>
+            <th class="red-header-data">
                 @Html.DisplayNameFor(model => model.Note)
             </th>
-            <th></th>
+            @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+            {
+                <th class="red-header-data">
+                    Admin
+                </th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -88,9 +94,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Section)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProfessorUnid)
@@ -122,12 +125,20 @@
             @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
             {
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.ID" class="red-table-link">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID" class="red-table-link">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID" class="red-table-link">Delete</a>
                 </td>
             }
         </tr>
 }
     </tbody>
 </table>
+
+<script>
+    $(document).ready(function () {
+        $('#courses-table').DataTable({
+            order: [[0, "desc"]],
+        });
+    });
+</script>
