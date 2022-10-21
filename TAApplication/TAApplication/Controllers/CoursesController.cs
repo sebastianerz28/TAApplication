@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using TAApplication.Models;
 
 namespace TAApplication.Controllers
 {
+    [Authorize]
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,12 +22,14 @@ namespace TAApplication.Controllers
         }
 
         // GET: Courses
+        [Authorize(Roles = "Admin, Professor")]
         public async Task<IActionResult> Index()
         {
               return View(await _context.Course.ToListAsync());
         }
 
         // GET: Courses/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Course == null)
@@ -44,6 +48,7 @@ namespace TAApplication.Controllers
         }
 
         // GET: Courses/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +59,7 @@ namespace TAApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("ID,SemesterOffered,YearOffered,Title,Department,Number,Section,Description,ProfessorUnid,ProfessorName,Start,End,DaysOffered,Location,CreditHours,Enrollment,Note")] Course course)
         {
             if (ModelState.IsValid)
@@ -66,6 +72,7 @@ namespace TAApplication.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Course == null)
@@ -86,6 +93,7 @@ namespace TAApplication.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,SemesterOffered,YearOffered,Title,Department,Number,Section,Description,ProfessorUnid,ProfessorName,Start,End,DaysOffered,Location,CreditHours,Enrollment,Note")] Course course)
         {
             if (id != course.ID)
@@ -117,6 +125,7 @@ namespace TAApplication.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Course == null)
@@ -137,6 +146,7 @@ namespace TAApplication.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Course == null)

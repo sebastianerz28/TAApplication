@@ -18,122 +18,127 @@
         <a class="btn btn-md bg-danger btn-primary" asp-area="" asp-controller="Courses" asp-action="Create">Create New</a>
     </p>
 }
-<table id="courses-table" class="display table cell-border compact">
-    <thead>
-        <tr class="red-table-header-row">
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.SemesterOffered)
-            </th>
-            <th class ="red-header-data">
-                @Html.DisplayNameFor(model => model.YearOffered)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.Department)
-            </th>
-            <th class ="red-header-data">
-                @Html.DisplayNameFor(model => model.Number)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.Section)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.ProfessorUnid)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.ProfessorName)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.Start)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.End)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.DaysOffered)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.CreditHours)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.Enrollment)
-            </th>
-            <th class="red-header-data">
-                @Html.DisplayNameFor(model => model.Note)
-            </th>
-            @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
-            {
+<div style="overflow:auto">
+    <table id="courses-table" class="display table cell-border compact">
+        <thead>
+            <tr class="red-table-header-row">
                 <th class="red-header-data">
-                    Admin
+                    @Html.DisplayNameFor(model => model.SemesterOffered)
                 </th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SemesterOffered)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.YearOffered)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Department)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Section)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfessorUnid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProfessorName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Start)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.End)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DaysOffered)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreditHours)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Enrollment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.YearOffered)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.Department)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.Number)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.Section)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.ProfessorUnid)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.ProfessorName)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.Start)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.End)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.DaysOffered)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.Location)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.CreditHours)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.Enrollment)
+                </th>
+                <th class="red-header-data">
+                    @Html.DisplayNameFor(model => model.Note)
+                </th>
+                @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+                {
+                    <th class="red-header-data">
+                        Admin
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
             {
-                <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID" class="red-table-link">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.ID" class="red-table-link">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.ID" class="red-table-link">Delete</a>
-                </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SemesterOffered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.YearOffered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Department)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Section)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProfessorUnid)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProfessorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Start)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.End)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DaysOffered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreditHours)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Enrollment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Note)
+                    </td>
+                    @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ID" class="red-table-link">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.ID" class="red-table-link">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ID" class="red-table-link">Delete</a>
+                        </td>
+                    }
+                </tr>
             }
-        </tr>
-}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
+
+
 
 <script>
     $(document).ready(function () {
