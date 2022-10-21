@@ -28,6 +28,10 @@
     text-align: center;
 }
 
+.space {
+    margin: 10px;
+}
+
 #acc-dropdown {
     margin-right: 50px
 }
@@ -63,7 +67,7 @@
 }
 
 
-#Application-page-title-wrapper {
+.page-title-wrapper {
     text-align:center;
 }
 
@@ -76,7 +80,7 @@
     text-align: center;
 }
 
-#application-container{
+.form-container{
     max-width:800px;
 }
 

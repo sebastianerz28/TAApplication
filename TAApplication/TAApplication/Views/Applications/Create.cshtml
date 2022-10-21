@@ -19,13 +19,13 @@
     ViewData["Title"] = "Create";
 }
 
-<div id="Application-page-title-wrapper">
+<div class="page-title-wrapper">
     <h1 id="Application-page-title">TA Application</h1>
     <hr />
     <h4 id="application-description" class="text-muted">Please fill out the application and click submit when finished.</h4>
 </div>
 <form asp-action="Create">
-    <div id="application-container" class="container">
+    <div class="container form-container">
         <div class="row">
             <div class="col-lg-3 prompt-label">
                 <label asp-for="DegreePursuing" class="control-label"></label>
@@ -129,6 +129,7 @@
         
     <div class="form-group submit-button-centered">
         <button type="submit" class="btn btn-danger btn-md" id="application-submit-button" data-bs-toggle="tooltip" data-bs-placement="bottom">Submit</button>
+    </div>
     </div>
 </form>
 
