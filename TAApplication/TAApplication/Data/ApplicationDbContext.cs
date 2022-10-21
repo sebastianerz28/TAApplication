@@ -28,6 +28,7 @@ namespace TAApplication.Data
     {
         private IHttpContextAccessor _httpContextAccessor;
         public DbSet<Application> Applications { get; set; }
+        public DbSet<Course> Courses { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
             IHttpContextAccessor http)
@@ -40,6 +41,7 @@ namespace TAApplication.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Application>().ToTable("Applications");
+            modelBuilder.Entity<Course>().ToTable("Courses");
         }
 
         public async Task InitializeUsers(UserManager<TAUser> um, RoleManager<IdentityRole> rm)
@@ -105,7 +107,24 @@ namespace TAApplication.Data
                 }
             }
 
-            if(Applications.Count() < 2)
+            
+
+        }
+
+        public async Task InitializeCourses()
+        {
+            if(Courses.Count() < 5)
+            {
+                Course c1 = new Course
+                {
+
+                };
+            }
+        }
+
+        public async Task InitializeApplications(UserManager<TAUser> um)
+        {
+            if (Applications.Count() < 2)
             {
                 Application a0 = new Application
                 {
@@ -120,14 +139,10 @@ namespace TAApplication.Data
                     ModificationDate = DateTime.Now,
                     TAUser = um.FindByEmailAsync("u0000000@utah.edu").Result
 
-
                 };
 
                 Applications.Add(a0);
                 SaveChanges();
-
-
-
 
                 Application a1 = new Application
                 {
@@ -153,7 +168,6 @@ namespace TAApplication.Data
                 Applications.Add(a1);
                 SaveChanges();
             }
-
 
 
         }
@@ -216,6 +230,13 @@ namespace TAApplication.Data
                 ((ModificationTracking)entity.Entity).ModifiedBy = currentUsername;
             }
         }
+        /// <summary>
+        /// JIM: this code adds time/user to DB entry
+        /// 
+        /// Check the DB tracker to see what has been modified, and add timestamps/names as appropriate.
+        /// 
+        /// </summary>
+        public DbSet<TAApplication.Models.Course> Course { get; set; }
     }
 
     

@@ -84,11 +84,19 @@
                                 <li>
                                     <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="Index">Applications Overview</a>
                                 </li>
+
+                                <li>
+                                    <a class="nav-link" asp-controller="Courses" asp-action="Index">Courses</a>
+                                </li>
                             }
                             @if (User.IsInRole("Professor"))
                             {
                                 <li>
                                     <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="List">View Applications</a>
+                                </li>
+
+                                <li>
+                                    <a class="nav-link" asp-controller="Courses" asp-action="Index">Courses</a>
                                 </li>
                             }
 

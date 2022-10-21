@@ -62,6 +62,8 @@ using (var scope = app.Services.CreateScope())
     var rm = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     DB.Database.Migrate();
     await DB.InitializeUsers(um, rm);
+    await DB.InitializeApplications(um);
+    await DB.InitializeCourses();
 }
 
 // Configure the HTTP request pipeline.
