@@ -162,6 +162,21 @@ namespace TAApplication.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        [Authorize(Roles ="Admin")]
+        [HttpPost, ActionName("EditNote")]
+        public async Task<IActionResult> EditNote(int id, string contents)
+        {
+            if(contents == null)
+                return Problem("'Note'  is null.");
+            var course = await _context.Course.FindAsync(id);
+            if (course != null)
+            {
+                course.Note = contents;
+            }
+            _context.Update(course);
+            _context.SaveChanges();
+            return Ok(new { success = true, message = "added!" });
+        }
 
         private bool CourseExists(int id)
         {
