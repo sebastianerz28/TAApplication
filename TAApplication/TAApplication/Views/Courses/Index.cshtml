@@ -64,13 +64,17 @@
                 <th class="red-header-data">
                     @Html.DisplayNameFor(model => model.Enrollment)
                 </th>
-                <th class="red-header-data">
-                    @Html.DisplayNameFor(model => model.Note)
-                </th>
-                @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+                @if (User.IsInRole("Admin"))
                 {
                     <th class="red-header-data">
-                        Admin
+                        @Html.DisplayNameFor(model => model.Note)
+                    </th>
+                }
+
+                @if (User.IsInRole("Admin") || User.IsInRole("Professor"))
+                {
+                    <th class="red-header-data">
+                        Actions
                     </th>
                 }
             </tr>
@@ -121,15 +125,22 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Enrollment)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Note)
-                    </td>
-                    @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Admin").Result)
+                    @if (User.IsInRole("Admin"))
                     {
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.ID" class="red-table-link">Edit</a> |
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    }
+                    @if (User.IsInRole("Admin") || User.IsInRole("Professor"))
+                    {
+                        <td>
                             <a asp-action="Details" asp-route-id="@item.ID" class="red-table-link">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.ID" class="red-table-link">Delete</a>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.ID" class="red-table-link">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@item.ID" class="red-table-link">Delete</a>
+                            }
                         </td>
                     }
                 </tr>

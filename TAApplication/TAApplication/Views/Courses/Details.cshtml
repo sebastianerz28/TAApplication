@@ -192,22 +192,37 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-2">
-                <div class="row label">
-                    @Html.DisplayNameFor(model => model.Note)
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="row label">
+                        @Html.DisplayNameFor(model => model.Note)
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <div class="row info-padding">
+                        @Html.DisplayFor(model => model.Note)
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-10">
-                <div class="row info-padding">
-                    @Html.DisplayFor(model => model.Note)
-                </div>
-            </div>
-        </div>
+        }
     </div>
 
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@if (User.IsInRole("Admin"))
+{
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a>
+        |
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+else
+{
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+

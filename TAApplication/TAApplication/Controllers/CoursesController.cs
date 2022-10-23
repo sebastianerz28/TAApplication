@@ -29,7 +29,7 @@ namespace TAApplication.Controllers
         }
 
         // GET: Courses/Details/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Professor, Applicant")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Course == null)

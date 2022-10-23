@@ -111,7 +111,31 @@
                                     </li>
                                     <li>
                                         <ul class="dropdown-item-text">
+                                            PS6
+                                            <li>
+                                                @{
+                                                    var cID2 = new Dictionary<string, string> { { "id", "1" } };
+                                                }
+                                                <a class="dropdown-item remove-bullet" asp-controller="Courses" asp-action="Edit" asp-all-route-data="cID2">Edit Course: CS1400</a>
+                                            </li>
+                                            <li>
+                                                @{
+                                                    var cID = new Dictionary<string, string> { { "id", "1" } };
+                                                }
+                                                <a class="dropdown-item remove-bullet" asp-controller="Courses" asp-action="Details" asp-all-route-data="cID">Details Course: CS1400</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item remove-bullet" asp-controller="Courses" asp-action="Index">Courses List</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item remove-bullet" asp-controller="Courses" asp-action="Create">Create Course</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <ul class="dropdown-item-text">
                                             PS5
+
                                             <li>
                                                 <a class="dropdown-item remove-bullet" asp-controller="Applications" asp-action="Index">Application Index</a>
                                             </li>
@@ -139,12 +163,12 @@
                                             OLD
                                             <li>
                                                 <a class="dropdown-item remove-bullet" asp-area="OLD" asp-controller="OLD" asp-action="ApplicationDetails">OLD Application Details</a>
-                                                
+
                                             </li>
                                             <li>
                                                 <a class="dropdown-item remove-bullet" asp-area="OLD" asp-controller="OLD" asp-action="ApplicationCreate">OLD Application Create</a>
                                             </li>
-                                            
+
                                             <li>
                                                 <a class="dropdown-item remove-bullet" asp-area="OLD" asp-controller="OLD" asp-action="ApplicantList">OLD Applicant List</a>
                                             </li>
