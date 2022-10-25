@@ -1,6 +1,6 @@
 ﻿
 function popup() {
-    $("#popupwindow").modal("show");
+    $("#popup").modal("show");
 };
 
 function EditNote(Course_ID, Note) {
