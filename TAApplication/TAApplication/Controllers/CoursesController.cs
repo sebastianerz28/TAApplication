@@ -162,6 +162,13 @@ namespace TAApplication.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        /// <summary>
+        /// Edits a note, and updates database
+        /// </summary>
+        /// <param name="id">id of course</param>
+        /// <param name="contents">contents of new note</param>
+        /// <returns>Ok if successful, Problem if unsuccessful</returns>
         [Authorize(Roles ="Admin")]
         [HttpPost, ActionName("EditNote")]
         public async Task<IActionResult> EditNote(int id, string contents)
@@ -173,9 +180,14 @@ namespace TAApplication.Controllers
             {
                 course.Note = contents;
             }
+            else
+            {
+                return Problem("Course could not be found");
+            }
+            
             _context.Update(course);
             _context.SaveChanges();
-            return Ok(new { success = true, message = "added!" });
+            return Ok(new { success = true, message = "Updated!" });
         }
 
         private bool CourseExists(int id)

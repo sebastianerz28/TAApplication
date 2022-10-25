@@ -1,9 +1,9 @@
 ﻿/**
  * Author:    Sebastian Ramirez
  * Partner:   Noah Carlson
- * Date:      10/8/2022
+ * Date:      10/20/2022
  * Course:    CS 4540, University of Utah, School of Computing
- * Copyright: CS 4540 and [Your Name(s)] - This work may not be copied for use in Academic Coursework.
+ * Copyright: CS 4540 and Noah Carlson and Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
  *
  * I, Sebastian Ramirez and Noah Carlson, certify that I wrote this code from scratch and did 
  * not copy it in part or whole from another source.  Any references used 
@@ -12,7 +12,7 @@
  *
  * File Contents
  *
- *    This file serves as the controller to applications gets and retrieves data from the database relating to applications
+ *    This file serves as the controller for courses gets and retrieves data from the database relating to applications
  */
 
 using System;

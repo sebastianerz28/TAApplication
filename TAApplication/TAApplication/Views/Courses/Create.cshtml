@@ -1,16 +1,30 @@
-﻿@model TAApplication.Models.Course
+﻿@*
+    <!--
+  Author:    Sebastian Ramirez
+  Partner:   Noah Carlson
+  Date:      Oct 25, 2022
+  Course:    CS 4540, University of Utah, School of Computing
+  Copyright: CS 4540 and Noah Carlson, Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
+  I, Sebastian Ramirez and Noah Carlson, certify that I wrote this code from scratch and did not copy it in part or whole from
+  another source.  Any references used in the completion of the assignment are cited in my README file.
+  File Contents
+     This file contains the html to create an application
+  -->
+*@
+
+@model TAApplication.Models.Course
 
 @{
     ViewData["Title"] = "Create";
 }
 <div class="page-title-wrapper">
     <h1>Create Course</h1>
-    <hr />  
+    <hr />
 </div>
 
 <form asp-action="Create">
     <div class="container form-container">
-         <div class="row">
+        <div class="row">
             <div class="col-lg-3 prompt-label">
                 <label asp-for="SemesterOffered" class="control-label"></label>
             </div>
@@ -175,5 +189,7 @@
 </form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
