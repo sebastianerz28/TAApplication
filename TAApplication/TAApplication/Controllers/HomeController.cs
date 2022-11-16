@@ -72,7 +72,7 @@ namespace TAApplication.Controllers
 
         /// <summary>
         /// Returns the Applicant List
-        /// Only Accesible by professors and admins
+        /// Only Accessible by professors and admins
         /// </summary>
         /// <returns> ApplicantList Page</returns>
         [Authorize(Roles = "Professor, Admin")]

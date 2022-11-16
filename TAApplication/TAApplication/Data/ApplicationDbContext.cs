@@ -29,7 +29,8 @@ namespace TAApplication.Data
         private IHttpContextAccessor _httpContextAccessor;
         public DbSet<Application> Applications { get; set; }
         public DbSet<Course> Courses { get; set; }
-        
+        public DbSet<Availability> Availabilities { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
             IHttpContextAccessor http)
             : base(options)
@@ -41,6 +42,7 @@ namespace TAApplication.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Application>().ToTable("Applications");
+            modelBuilder.Entity<Availability>().ToTable("Availabilities");
             modelBuilder.Entity<Course>().ToTable("Courses");
         }
 
@@ -280,6 +282,19 @@ namespace TAApplication.Data
             }
 
 
+        }
+
+        public async Task InitAvailability(UserManager<TAUser> um)
+        {
+            Availability a = new Availability();
+            a.Monday =    "1111111111111111000000000000000000000000000000000000000000000000";
+            a.Tuesday =   "0000000000000000111111111111111111110000000000000000000000000000";
+            a.Wednesday = "0000000000000000000000000000000000000000000000000000000000000000";
+            a.Thursday =  "0000000000000000111111111111111111110000000000000000000000000000";
+            a.Friday =    "1111111111111111000000000000000000000000000000000000000000000000";
+            a.TAUser = um.FindByEmailAsync("u0000000@utah.edu").Result;
+            Availabilities.Add(a);
+            await SaveChangesAsync();
         }
 
         /// <summary>

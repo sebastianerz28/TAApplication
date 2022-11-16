@@ -1,16 +1,16 @@
 ﻿<!--
-  Author:    Sebastian Ramirez
-  Partner:   Noah Carlson
-  Date:      10/8/2022
-  Course:    CS 4540, University of Utah, School of Computing
-  Copyright: CS 4540 and [Your Name(s)] - This work may not be copied for use in Academic Coursework.
+Author:    Sebastian Ramirez
+Partner:   Noah Carlson
+Date:      10/8/2022
+Course:    CS 4540, University of Utah, School of Computing
+Copyright: CS 4540 and [Your Name(s)] - This work may not be copied for use in Academic Coursework.
 
-  I, Sebastian Ramirez, certify that I wrote this code from scratch and did not copy it in part or whole from
-  another source.  Any references used in the completion of the assignment are cited in my README file.
+I, Sebastian Ramirez, certify that I wrote this code from scratch and did not copy it in part or whole from
+another source.  Any references used in the completion of the assignment are cited in my README file.
 
-  File Contents
+File Contents
 
-     This file is a scaffoled version to edit an application, combines styling with scaffoled forms
+This file is a scaffoled version to edit an application, combines styling with scaffoled forms
 -->
 
 @model TAApplication.Models.Application
@@ -28,7 +28,7 @@
 
 <div id="Application-page-title-wrapper">
     <h1 id="Application-page-title">Edit @UserManager.GetUserAsync(User).Result.Name @UserManager.GetUserAsync(User).Result.Unid</h1>
-    <hr />
+    <hr/>
     <h4 id="application-description" class="text-muted">Edit the fields as needed and click save before exiting the page.</h4>
 </div>
 <form asp-action="Edit">
@@ -48,7 +48,7 @@
                 <label asp-for="Department" class="control-label"></label>
             </div>
             <div class="col-lg-6 data-field-col">
-                <input asp-for="Department" class="form-control" />
+                <input asp-for="Department" class="form-control"/>
                 <span asp-validation-for="Department" class="text-danger"></span>
             </div>
         </div>
@@ -57,7 +57,7 @@
                 <label asp-for="GPA" class="control-label"></label>
             </div>
             <div class="col-lg-6 data-field-col">
-                <input asp-for="GPA" class="form-control" />
+                <input asp-for="GPA" class="form-control"/>
                 <span asp-validation-for="GPA" class="text-danger"></span>
             </div>
         </div>
@@ -66,7 +66,7 @@
                 <label asp-for="DesiredHours" class="control-label"></label>
             </div>
             <div class="col-lg-6 data-field-col">
-                <input asp-for="DesiredHours" class="form-control" />
+                <input asp-for="DesiredHours" class="form-control"/>
                 <span asp-validation-for="DesiredHours" class="text-danger"></span>
             </div>
         </div>
@@ -75,7 +75,7 @@
                 @Html.DisplayNameFor(model => model.AvailableBeforeSemester)
             </div>
             <div class="col-lg-6 data-field-col">
-                <input class="form-check-input" asp-for="AvailableBeforeSemester" />
+                <input class="form-check-input" asp-for="AvailableBeforeSemester"/>
             </div>
         </div>
         <div class="row">
@@ -83,7 +83,7 @@
                 <label asp-for="SemestersCompleted" class="control-label"></label>
             </div>
             <div class="col-lg-6 data-field-col">
-                <input asp-for="SemestersCompleted" class="form-control" />
+                <input asp-for="SemestersCompleted" class="form-control"/>
                 <span asp-validation-for="SemestersCompleted" class="text-danger"></span>
             </div>
         </div>
@@ -101,7 +101,7 @@
                 <label asp-for="TransferSchool" class="control-label"></label>
             </div>
             <div class="col-lg-6 data-field-col">
-                <input asp-for="TransferSchool" class="form-control" />
+                <input asp-for="TransferSchool" class="form-control"/>
                 <span asp-validation-for="TransferSchool" class="text-danger"></span>
             </div>
         </div>
@@ -110,7 +110,7 @@
                 <label asp-for="LinkedIn" class="control-label"></label>
             </div>
             <div class="col-lg-6 data-field-col">
-                <input asp-for="LinkedIn" class="form-control" />
+                <input asp-for="LinkedIn" class="form-control"/>
                 <span asp-validation-for="LinkedIn" class="text-danger"></span>
             </div>
         </div>
@@ -120,21 +120,20 @@
 
             </div>
             <div class="col-lg-6 data-field-col">
-                <input asp-for="ResumeName" class="form-control" />
+                <input asp-for="ResumeName" class="form-control"/>
                 <span asp-validation-for="ResumeName" class="text-danger"></span>
             </div>
         </div>
-        @{var dic = new Dictionary<string, string> { { "id", Model.TAUser.Id} };}
+        @{ var dic = new Dictionary<string, string> { { "id", Model.TAUser.Id } }; }
         <div class="form-group submit-button-centered">
             <button asp-action="Details" asp-all-route-data="dic" class="btn btn-danger btn-md">Back</button>
             <button type="submit" class="btn btn-danger btn-md" id="application-submit-button" data-bs-toggle="tooltip" data-bs-placement="bottom">Save</button>
         </div>
-       
+    </div>
+
 </form>
 
 
-
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
