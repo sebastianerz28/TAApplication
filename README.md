@@ -10,8 +10,8 @@ Project:    TA Application
 Copyright:  CS 4540 and Noah Carlson, Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
 ```
 # Website Links:
-Noah - PS5
-Sebastian - PS5
+Noah - https://34.207.36.60.nip.io
+Sebastian - https://54.226.130.73.nip.io
 
 # Overview of the TA Application Functionality 
 
