@@ -1,7 +1,9 @@
-﻿@model TAApplication.Models.Availability
+﻿@using Microsoft.AspNetCore.Identity
+@using TAApplication.Areas.Data
+@model TAApplication.Models.Availability
+@inject UserManager<TAUser> um
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/6.2.0/browser/pixi.js"></script>
-@*<script src="~/js/Availability/Availability.js" type="module"></script>*@
 
 @{
     ViewData["Title"] = "Index";
@@ -12,7 +14,82 @@
 <div id="canvas_div">
 </div>
 
+<script src="~/js/Availability/setup.js" type="text/javascript"></script>
+<script src="~/js/Availability/availability.js" type="text/javascript"></script>
 <script type="text/javascript">
+
+    $(function () {
+        setup_pixi(800, 800);
+
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/Availabilities/GetSchedule",
+            data: {
+                userid: "@um.GetUserId(User)"
+            },
+            success: function (data) {
+                let x = 100;
+                let slots = data;
+                let days = [slots.Monday, slots.Tuesday, slots.Wednesday, slots.Thursday, slots.Friday];
+                for (let i = 0; i < 5; i++) {
+                    for (let j = 0; j < 48; j++) {
+                        let slot = new Slot(j + (i * 48), x, 50 + j * 10, days[i].charAt(j) == 1);
+                        app.stage.addChild(slot);
+                    }
+                    x += 110;
+                }
+
+            },
+            error: function (data) {
+                alert("error");
+            }
+        });
+        
+        let x = 650;
+        const hours = ["8:00 am", "9:00 am", "10:00 am", "11:00 am", "12:00 pm", "1:00 pm", "2:00 pm", "3:00 pm", "4:00 pm", "5:00 pm", "6:00 pm", "7:00 pm", "8:00 pm"]
+        for (let i = 0; i < 13; i++) {
+            let line = new PIXI.Graphics();
+            app.stage.addChild(line);
+            line.lineStyle({
+                width: 1, color: 0x000000
+            }).moveTo(100 - 15, 50 + ((i) * 4) * 10).lineTo(x + 5, 50 + ((i) * 4) * 10);
+
+            var timeText = new PIXI.Text(hours[i],
+                {
+                    fontFamily: 'Arial',
+                    fontSize: 14,
+                    fill: 0x000000,
+                    align: 'center',
+                });
+            app.stage.addChild(timeText);
+            timeText.x = x + 15;
+            timeText.y = 42 + ((i) * 4) * 10
+
+        }
+        const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+        let dayX = 100;
+        for (let i = 0; i < days.length; i++) {
+            var dayText = new PIXI.Text(days[i],
+                {
+                    fontFamily: 'Arial',
+                    fontSize: 14,
+                    fill: 0x000000,
+                    align: 'center',
+                });
+
+            app.stage.addChild(dayText)
+            // Position the text
+            dayText.x = dayX + 15;
+            dayText.y = 25;
+            dayX += 110;
+        }
+
+    });
+
+</script>
+
+@*<script type="text/javascript">
     //$("#save_me").hide();
 
     let bg_color = 0xabcdef;
@@ -31,18 +108,6 @@
         mousedown = false;
     });
 
-    //$("#canvas_div").on('mousemove', function (e) {
-    //    if (mousedown) {
-    //        var elem = document.elementFromPoint(e.clientX, e.clientY)
-    //        elem.selected = !elem.selected;
-    //        //$("#save_me").show();
-
-    //        console.log(`I am ${elem.id}`);
-    //        elem.draw_me();
-    //    }
-
-    //});
-
     class Slot extends PIXI.Graphics {
         on_color = 0xbb500;
         off_color = 0xbbbbbb;
@@ -53,13 +118,13 @@
 
         color = 0xffffff;
 
-        constructor(id, x, y) {
+        constructor(id, x, y, isSelected = false) {
             super();
 
             this.x = x;
             this.y = y;
             this.id = id;
-            this.selected = false;
+            this.selected = isSelected;
             //this.text = new PIXI.Text(`I am ${id}`);
 
             this.interactive = true;
@@ -79,20 +144,13 @@
 
             this.on('mousemove', function (e) {
                 if (mousedown) {
-                    //console.log("here")
-                    //console.log()
                     if (e.data.global.x >= this.x && e.data.global.x <= this.x + this.width
                         && e.data.global.y >= this.y && e.data.global.y <= this.y + this.height) {
-                        //$("#save_me").show();
-                        //console.log(`I am ${this.id}`);
                         this.draw_me();
                     }
                 }
             });
 
-
-            //this.addChild(this.text);
-            //this.text.visible = false;
         }
 
         draw_me() {
@@ -127,11 +185,10 @@
     for (let i = 0; i < 5; i++) {
         for (let j = 0; j < 48; j++) {
             new Slot(j + (i * 48), x, 50 + j * 10);
-
         }
         x += 110;
     }
-    console.log(x);
+
     const hours = ["8:00 am", "9:00 am", "10:00 am", "11:00 am", "12:00 pm", "1:00 pm", "2:00 pm", "3:00 pm", "4:00 pm", "5:00 pm", "6:00 pm", "7:00 pm", "8:00 pm"]
     for (let i = 0; i < 13; i++) {
         let line = new PIXI.Graphics();
@@ -174,4 +231,5 @@
     function doit() {
         //$("#save_me").hide();
     }
-</script>
+</script>*@
+
