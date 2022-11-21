@@ -26,7 +26,7 @@ namespace TAApplication.Data
 {
     public class ApplicationDbContext : IdentityDbContext<TAUser>
     {
-        private IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public DbSet<Application> Applications { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Availability> Availabilities { get; set; }
@@ -59,10 +59,17 @@ namespace TAApplication.Data
                 await rm.CreateAsync(new IdentityRole("Applicant"));
             }
 
-            if( um.Users.Count() < 5)
+            if (um.Users.Count() < 5)
             {   //Create New user
-                TAUser user = new TAUser { UserName = "admin@utah.edu", Unid = "u1234567",
-                    Email = "admin@utah.edu", EmailConfirmed = true, Name = "Admin0", ReferredTo = "" };
+                TAUser user = new()
+                {
+                    UserName = "admin@utah.edu",
+                    Unid = "u1234567",
+                    Email = "admin@utah.edu",
+                    EmailConfirmed = true,
+                    Name = "Admin0",
+                    ReferredTo = ""
+                };
                 var result = await um.CreateAsync(user, "123ABC!@#def");
                 if (result.Succeeded)
                 {
@@ -72,8 +79,15 @@ namespace TAApplication.Data
                 }
 
                 //Create New user
-                user = new TAUser { UserName = "professor@utah.edu", Unid = "u7654321",
-                    Email = "professor@utah.edu", EmailConfirmed = true, Name = "Prof0",  ReferredTo = "" };
+                user = new TAUser
+                {
+                    UserName = "professor@utah.edu",
+                    Unid = "u7654321",
+                    Email = "professor@utah.edu",
+                    EmailConfirmed = true,
+                    Name = "Prof0",
+                    ReferredTo = ""
+                };
                 result = await um.CreateAsync(user, "123ABC!@#def");
                 if (result.Succeeded)
                 {
@@ -82,8 +96,15 @@ namespace TAApplication.Data
                 }
 
                 //Create New user
-                user = new TAUser { UserName = "u0000000@utah.edu", Unid = "u0000000",
-                    Email = "u0000000@utah.edu", EmailConfirmed = true, Name = "App0",  ReferredTo = "" };
+                user = new TAUser
+                {
+                    UserName = "u0000000@utah.edu",
+                    Unid = "u0000000",
+                    Email = "u0000000@utah.edu",
+                    EmailConfirmed = true,
+                    Name = "App0",
+                    ReferredTo = ""
+                };
                 result = await um.CreateAsync(user, "123ABC!@#def");
                 if (result.Succeeded)
                 {
@@ -92,8 +113,15 @@ namespace TAApplication.Data
                 }
 
                 //Create New user
-                user = new TAUser { UserName = "u0000001@utah.edu", Unid = "u0000001",
-                    Email = "u0000001@utah.edu", EmailConfirmed = true, Name = "App1",  ReferredTo = "" };
+                user = new TAUser
+                {
+                    UserName = "u0000001@utah.edu",
+                    Unid = "u0000001",
+                    Email = "u0000001@utah.edu",
+                    EmailConfirmed = true,
+                    Name = "App1",
+                    ReferredTo = ""
+                };
                 result = await um.CreateAsync(user, "123ABC!@#def");
                 if (result.Succeeded)
                 {
@@ -102,8 +130,15 @@ namespace TAApplication.Data
                 }
 
                 //Create New user
-                user = new TAUser { UserName = "u0000002@utah.edu", Unid = "u0000002",
-                    Email = "u0000002@utah.edu", EmailConfirmed = true, Name = "App2",  ReferredTo = "" };
+                user = new TAUser
+                {
+                    UserName = "u0000002@utah.edu",
+                    Unid = "u0000002",
+                    Email = "u0000002@utah.edu",
+                    EmailConfirmed = true,
+                    Name = "App2",
+                    ReferredTo = ""
+                };
                 result = await um.CreateAsync(user, "123ABC!@#def");
                 if (result.Succeeded)
                 {
@@ -112,7 +147,7 @@ namespace TAApplication.Data
                 }
             }
 
-            
+
 
         }
 
@@ -122,7 +157,7 @@ namespace TAApplication.Data
         /// <returns></returns>
         public async Task InitializeCourses()
         {
-            if(Courses.Count() < 5)
+            if (Courses.Count() < 5)
             {
                 Course c1 = new Course
                 {
@@ -144,7 +179,7 @@ namespace TAApplication.Data
                     Note = "This course needs more TAs"
                 };
                 Courses.Add(c1);
-                
+
                 Course c2 = new Course
                 {
                     SemesterOffered = "Spring",
@@ -226,7 +261,7 @@ namespace TAApplication.Data
                 };
                 Courses.Add(c5);
 
-                SaveChanges();
+                await SaveChangesAsync();
             }
         }
 
@@ -278,7 +313,7 @@ namespace TAApplication.Data
                 };
 
                 Applications.Add(a1);
-                SaveChanges();
+                await SaveChangesAsync();
             }
 
 
@@ -286,15 +321,21 @@ namespace TAApplication.Data
 
         public async Task InitAvailability(UserManager<TAUser> um)
         {
-            Availability a = new Availability();
-            a.Monday =    "1111111111111111000000000000000000000000000000000000000000000000";
-            a.Tuesday =   "0000000000000000111111111111111111110000000000000000000000000000";
-            a.Wednesday = "0000000000000000000000000000000000000000000000000000000000000000";
-            a.Thursday =  "0000000000000000111111111111111111110000000000000000000000000000";
-            a.Friday =    "1111111111111111000000000000000000000000000000000000000000000000";
-            a.TAUser = um.FindByEmailAsync("u0000000@utah.edu").Result;
-            Availabilities.Add(a);
-            await SaveChangesAsync();
+            if (Availabilities.Count() == 0)
+            {
+
+                Availability a = new()
+                {
+                    Monday = "1111111111111111000000000000000000000000000000000000000000000000",
+                    Tuesday = "0000000000000000111111111111111111110000000000000000000000000000",
+                    Wednesday = "0000000000000000000000000000000000000000000000000000000000000000",
+                    Thursday = "0000000000000000111111111111111111110000000000000000000000000000",
+                    Friday = "1111111111111111000000000000000000000000000000000000000000000000",
+                    TAUser = um.FindByEmailAsync("u0000000@utah.edu").Result
+                };
+                Availabilities.Add(a);
+                await SaveChangesAsync();
+            }
         }
 
         /// <summary>
@@ -364,5 +405,5 @@ namespace TAApplication.Data
         public DbSet<TAApplication.Models.Course> Course { get; set; }
     }
 
-    
+
 }
