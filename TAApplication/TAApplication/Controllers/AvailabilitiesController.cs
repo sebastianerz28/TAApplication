@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -30,17 +31,39 @@ namespace TAApplication.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View();
+            return await Task.FromResult(View());
         }
 
         [HttpPost]
         [Authorize(Roles = "Applicant")]
-        public async Task SetSchedule(string slots, string userId)
+        public async Task<IActionResult> SetSchedule(string slots, string userId)
         {
-            Availability a = JsonSerializer.Deserialize<Availability>(slots);
-            a.TAUser = _userManager.FindByIdAsync(userId).Result;
-            _context.Availabilities.Update(a);
-            await _context.SaveChangesAsync();
+            if (AvailabilityExists(userId) && slots.Length == 240)
+            {
+                var result = _context.Availabilities.Include("TAUser").First(c => c.TAUser.Id == userId);
+                string[] days = new string[5];
+                for (int i = 0; i < slots.Length; i += 48)
+                {
+                    days[i / 48] = slots.Substring(i, 48);
+
+                }
+
+
+                result.Monday = days[0];
+                result.Tuesday = days[1];
+                result.Wednesday = days[2];
+                result.Thursday = days[3];
+                result.Friday = days[4];
+
+
+                _context.Availabilities.Update(result);
+                await _context.SaveChangesAsync();
+                return Ok(new { success = true, message = "added!" });
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
         [HttpGet]
         [Authorize(Roles = "Applicant")]
@@ -49,12 +72,42 @@ namespace TAApplication.Controllers
             if (AvailabilityExists(userid))
             {
                 var result = _context.Availabilities.Include("TAUser").First(c => c.TAUser.Id == userid);
-                var days = new { Monday = result.Monday, Tuesday = result.Tuesday, Wednesday = result.Wednesday, Thursday = result.Thursday, Friday = result.Friday };
+                var days = new
+                {
+                    result.Monday,
+                    result.Tuesday,
+                    result.Wednesday,
+                    result.Thursday,
+                    result.Friday
+                };
                 return days.ToJson();
             }
             else
             {
-                return null;
+                Availability a = new Availability();
+                StringBuilder emptySlotStringBuilder = new StringBuilder();
+                for (int i = 0; i < 48; i++)
+                {
+                    emptySlotStringBuilder.Append('0');
+                }
+
+                a.Monday = emptySlotStringBuilder.ToString();
+                a.Tuesday = emptySlotStringBuilder.ToString();
+                a.Wednesday = emptySlotStringBuilder.ToString();
+                a.Thursday = emptySlotStringBuilder.ToString();
+                a.Friday = emptySlotStringBuilder.ToString();
+                a.TAUser = _userManager.FindByIdAsync(userid).Result;
+                _context.Availabilities.Add(a);
+                _context.SaveChanges();
+
+                return new
+                {
+                    a.Monday,
+                    a.Tuesday,
+                    a.Wednesday,
+                    a.Thursday,
+                    a.Friday
+                }.ToJson();
             }
         }
 
