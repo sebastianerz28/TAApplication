@@ -260,14 +260,14 @@ namespace TAApplication.Controllers
                     s => s.DesiredHours,
                     s => s.AvailableBeforeSemester,
                     s => s.SemestersCompleted,
-                    s => s.PersonalStatement,
-                    s => s.TransferSchool,
-                    s => s.LinkedIn,
-                    s => s.ResumeName))
+                    s => s.PersonalStatement ?? string.Empty,
+                    s => s.TransferSchool ?? string.Empty,
+                    s => s.LinkedIn ?? string.Empty,
+                    s => s.ResumeName ?? string.Empty))
                 {
                     try
                     {
-                        _context.SaveChanges();
+                        await _context.SaveChangesAsync();
                         return RedirectToAction(nameof(Details), new { id = applicationToUpdate.TAUser.Id });
                     }
                     catch (DataException)
