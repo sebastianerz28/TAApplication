@@ -13,13 +13,19 @@
 
 <div id="canvas_div">
 </div>
-<button id="save-button" class="btn-primary" onclick="Save_Availability('@um.GetUserAsync(User).Result.Id')">Save</button>
+<button id="save-button" type="button" class="btn btn-primary" onclick="Save_Availability('@um.GetUserAsync(User).Result.Id')">Save</button>
+<div id="saving-spinner" class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+</div>
+
 
 <script src="~/js/Availability/setup.js" type="text/javascript"></script>
 <script src="~/js/Availability/availability.js" type="text/javascript"></script>
 <script type="text/javascript">
 
     $(function () {
+        let spinner = document.getElementById("saving-spinner");
+        spinner.hidden = true;
         setup_pixi(800, 800);
 
         $.ajax({

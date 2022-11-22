@@ -110,10 +110,11 @@ function drawDays() {
 
 
 function Save_Availability(userId) {
+    let spinner = document.getElementById("saving-spinner");
+    spinner.hidden = false;
     let data = "";
     for (let i = 0; i < slots.length; i++)
         data += slots[i];
-    console.log
     $.post(
             {
                 url: "/Availabilities/SetSchedule",
@@ -123,6 +124,6 @@ function Save_Availability(userId) {
                 }
             })
         .done(function (data) {
-            console.log("Sample of data:", data);
+            spinner.hidden = true;
         });
 }
