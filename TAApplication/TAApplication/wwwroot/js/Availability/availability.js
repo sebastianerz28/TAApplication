@@ -26,7 +26,9 @@ $("#canvas_div").on('mouseup', function (e) {
 });
 
 var slots = [];
-
+/*
+ * Contains the class definition of a 15 minute time slot on the availability chart
+ */
 class Slot extends PIXI.Graphics {
     on_color = 0xbb500;
     off_color = 0xbbbbbb;
@@ -68,7 +70,9 @@ class Slot extends PIXI.Graphics {
         });
 
     }
-
+    /*
+    * Draws the slot as the opposite color of its current color
+    */
     draw_me() {
         if (typeselected == this.selected) {
             this.selected = !this.selected;
@@ -86,7 +90,9 @@ class Slot extends PIXI.Graphics {
             }
         }
     }
-
+    /*
+    * Draws the inital slots as given from the database
+    */
     init_draw(isSelected) {
         
         this.clear();
@@ -103,7 +109,9 @@ class Slot extends PIXI.Graphics {
 
 }
 
-
+/*
+* Draws the text for each day of the week
+*/
 function drawDays() {
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
     let dayX = 100;
@@ -125,7 +133,9 @@ function drawDays() {
     console.log(slots);
 }
 
-
+/*
+* Sends an ajax request to the controller to save updated availability to the database
+*/
 function Save_Availability(userId) {
     let spinner = document.getElementById("saving-spinner");
     spinner.hidden = false;

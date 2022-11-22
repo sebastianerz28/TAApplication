@@ -16,6 +16,9 @@
 
 var app = null;
 
+/*
+* Creates a new PIXI application and puts it inside of the empty div on screen
+*/
 function setup_pixi(width, height) {
     let bg_color = 0xFFFFFF;
     app = new PIXI.Application({ backgroundColor: bg_color });
