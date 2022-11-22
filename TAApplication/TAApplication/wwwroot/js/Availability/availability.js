@@ -1,4 +1,20 @@
-﻿let mousedown = false;
+﻿/**
+ * Author:    Sebastian Ramirez
+ * Partner:   Noah Carlson
+ * Date:      11/22/2022
+ * Course:    CS 4540, University of Utah, School of Computing
+ * Copyright: CS 4540 and [Noah Carlson/Sebastian Ramirez] - This work may not be copied for use in Academic Coursework.
+ *
+ * I, Sebastian Ramirez and Noah Carlson, certify that I wrote this code from scratch and did 
+ * not copy it in part or whole from another source.  Any references used 
+ * in the completion of the assignment are cited in my README file and in
+ * the appropriate method header.
+ *
+ * File Contents
+ *      This File contains the java script for the availability PIXI web application's functionality.
+ */
+
+let mousedown = false;
 var typeselected = false;
 
 $("#canvas_div").on('mousedown', function (e) {
@@ -10,7 +26,9 @@ $("#canvas_div").on('mouseup', function (e) {
 });
 
 var slots = [];
-
+/*
+ * Contains the class definition of a 15 minute time slot on the availability chart
+ */
 class Slot extends PIXI.Graphics {
     on_color = 0xbb500;
     off_color = 0xbbbbbb;
@@ -32,6 +50,7 @@ class Slot extends PIXI.Graphics {
         this.interactive = true;
 
         this.on('mousedown', function (e) {
+            document.getElementById("save-button").disabled = false;
             if (this.selected) {
                 typeselected = true;
             }
@@ -51,7 +70,9 @@ class Slot extends PIXI.Graphics {
         });
 
     }
-
+    /*
+    * Draws the slot as the opposite color of its current color
+    */
     draw_me() {
         if (typeselected == this.selected) {
             this.selected = !this.selected;
@@ -69,7 +90,9 @@ class Slot extends PIXI.Graphics {
             }
         }
     }
-
+    /*
+    * Draws the inital slots as given from the database
+    */
     init_draw(isSelected) {
         
         this.clear();
@@ -86,7 +109,9 @@ class Slot extends PIXI.Graphics {
 
 }
 
-
+/*
+* Draws the text for each day of the week
+*/
 function drawDays() {
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
     let dayX = 100;
@@ -108,7 +133,9 @@ function drawDays() {
     console.log(slots);
 }
 
-
+/*
+* Sends an ajax request to the controller to save updated availability to the database
+*/
 function Save_Availability(userId) {
     let spinner = document.getElementById("saving-spinner");
     spinner.hidden = false;
@@ -125,6 +152,7 @@ function Save_Availability(userId) {
             })
         .done(function (data) {
             spinner.hidden = true;
+            document.getElementById("save-button").disabled = true;
         });
 }
 

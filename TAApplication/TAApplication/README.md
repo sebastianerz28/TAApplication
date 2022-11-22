@@ -1,30 +1,32 @@
 ﻿```
 Author:     Noah Carlson
 Partner:    Sebastian Ramirez
-Date:       25-October-2022
+Date:       22-November-2022
 Course:     CS 4540, University of Utah, School of Computing
 GitHub ID:  Smirqy, sebastianerz28
 Repo:       https://github.com/uofu-cs4540-fall2022/taapplication-fullstring.git
-Commit Tag: PS6
+Commit Tag: PS8
 Project:    TA Application Website
 Copyright:  CS 4540 and Noah Carlson, Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
 ```
-# Website Link:
-Noah - https://34.207.36.60.nip.io
-Sebastian - https://54.226.130.73.nip.io
 
 # Overview of the TA Application Functionality 
 
-The TA Application program is currently capable of taking applicants' applications and storing them in a database a long with taking file uploads of resumes and profile pictures as well as creating, displaying, courses. 
-The most recent work was adding the courses table in the database along with updating the scaffolded views.
+The TA Application program is currently capable of taking applicants' applications and storing them in a database a long with taking file uploads of resumes and profile pictures as well as creating, displaying, courses.
+Along with taking applications a interactive way of displaying and setting the applicants availability was added.
+The most recent work was adding a PIXI interface for interactively updating an applicant's availability.
 
 # Comments to Evaluators:
 
--For the editing the note on the courses table. We chose to make the notes a link which will show a popup that then edits the note. We chose the link option to show the user thank this is a clickable part of the page.
+We decided on the save button which was the easiest way to show if it is saved or not.
 
 # Improvements:
 
--Made courses as a data-table to add more functionality to the table
+Updated save button to be only be able to be clicked when needed to be saved.
+
+# Above and Beyond
+
+Did not do above and beyond.
 
 # Consulted Peers:
 
@@ -56,3 +58,4 @@ All images were free art commons.
     4. Assignment Four: Predicted Hours:  9 Actual Hours:  10 
     5. Assignment Five: Predicted Hours: 12 Actual Hours: 10/11
     6. Assignment Six: Predicted Hours: 6/7 Actual Hours: 8
+    8. Assignment Eight: Predicted Hours: 7 Actual Hours: 7
