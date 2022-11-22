@@ -1,4 +1,22 @@
-﻿using System;
+﻿/**
+ * Author:    Sebastian Ramirez
+ * Partner:   Noah Carlson
+ * Date:      11/22/2022
+ * Course:    CS 4540, University of Utah, School of Computing
+ * Copyright: CS 4540 and Noah Carlson/Sebastian Ramirez - This work may not be copied for use in Academic Coursework.
+ *
+ * I, Sebastian Ramirez, certify that I wrote this code from scratch and did 
+ * not copy it in part or whole from another source.  Any references used 
+ * in the completion of the assignment are cited in my README file and in
+ * the appropriate method header.
+ *
+ * File Contents
+ *
+ *    This file serves as the controller for availability
+ *    Provides end points to get and set a users/availability
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,13 +45,22 @@ namespace TAApplication.Controllers
             _userManager = userManager;
         }
 
-        // GET: Availabilities
+        /// <summary>
+        /// Sends Index Page
+        /// </summary>
+        /// <returns></returns>
         [Authorize (Roles = "Applicant")]
         public async Task<IActionResult> Index()
         {
             return await Task.FromResult(View());
         }
 
+        /// <summary>
+        /// Receives slots and a userID, updates the database accordingly
+        /// </summary>
+        /// <param name="slots">A string containing 240 1s or 0s</param>
+        /// <param name="userId">Id of the user</param>
+        /// <returns>Ok if the database could be updated successfully, BadRequest Otherwise</returns>
         [HttpPost]
         [Authorize(Roles = "Applicant")]
         public async Task<IActionResult> SetSchedule(string slots, string userId)
@@ -65,6 +92,11 @@ namespace TAApplication.Controllers
                 return BadRequest();
             }
         }
+        /// <summary>
+        /// Gets the schedule for a user given a userId
+        /// </summary>
+        /// <param name="userid">ID of the user</param>
+        /// <returns>Existing availability, or a new one if the user does not exist</returns>
         [HttpGet]
         [Authorize(Roles = "Applicant")]
         public string GetSchedule(string userid)
