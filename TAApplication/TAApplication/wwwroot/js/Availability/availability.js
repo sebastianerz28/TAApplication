@@ -32,6 +32,7 @@ class Slot extends PIXI.Graphics {
         this.interactive = true;
 
         this.on('mousedown', function (e) {
+            document.getElementById("save-button").disabled = false;
             if (this.selected) {
                 typeselected = true;
             }
@@ -125,6 +126,7 @@ function Save_Availability(userId) {
             })
         .done(function (data) {
             spinner.hidden = true;
+            document.getElementById("save-button").disabled = true;
         });
 }
 
