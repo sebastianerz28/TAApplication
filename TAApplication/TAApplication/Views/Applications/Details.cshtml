@@ -9,7 +9,6 @@ another source.  Any references used in the completion of the assignment are cit
 File Contents
 This file contains the HTML for the Application Details Page which displays an applicants details
 -->
-
 @model TAApplication.Models.Application
 @using Microsoft.AspNetCore.Identity
 @using TAApplication.Areas.Data
@@ -33,24 +32,25 @@ This file contains the HTML for the Application Details Page which displays an a
 <div class="container">
     <div class="row">
         <div class="col-lg-6">
-            @if(Model?.ProfilePicName != null)
-            {   <div class="profile-pic">
+            @if (Model?.ProfilePicName != null)
+            {
+                   <div class="profile-pic">
                     @{
                         string path = "/uploads/" + Model.ProfilePicName;
-                        <img src= @path alt="User's self portrait" id="user_portrait" />
-                     }
+                        <img src=@path alt="User's self portrait" id="user_portrait" />
+                    }
                 </div>
-                @if(canEdit)
+                @if (canEdit)
                 {
                     <form method="post"
                   enctype="multipart/form-data"
                   asp-controller="Applications"
                   asp-action="FileUpload">
-                    <input type="file" name="files" multiple />
-                    <input type="submit" value="Upload Profile Photo" />
-                    <input hidden name="category" value="photo" />
-                    <input hidden name="appID" value="@Model.Id" />
-                </form>
+                        <input type="file" name="files" multiple />
+                        <input type="submit" value="Upload Profile Photo" />
+                        <input hidden name="category" value="photo" />
+                        <input hidden name="appID" value="@Model.Id" />
+                    </form>
                 }
             }
             else
@@ -108,139 +108,186 @@ This file contains the HTML for the Application Details Page which displays an a
 
         </div>
         <div class="col-lg-6">
-                <div id="application-container" class="container">
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="pos-sought" class="form-label">Position sought:</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            <p id="pos-sought">Senior TA</p>
-                        </div>
+            <div id="application-container" class="container">
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="pos-sought" class="form-label">Position sought:</label>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="degree-pursuing" class="form-label">@Html.DisplayFor(model => model.DegreePursuing)</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            <p id="degree-pursuing">@Html.DisplayFor(model => model.DegreePursuing)</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="degree-dept" class="form-label">@Html.DisplayNameFor(model => model.Department)</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            <p id="degree-dept">@Html.DisplayFor(model => model.Department)</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="u-gpa" class="form-label">@Html.DisplayNameFor(model => model.GPA)</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            <p id="u-gpa">@Html.DisplayFor(model => model.GPA)</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="max-weekly-hours" class="form-label">@Html.DisplayNameFor(model=>model.DesiredHours)</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            <p id="max-weekly-hours">@Html.DisplayFor(model=>model.DesiredHours)</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="availability" class="form-label">@Html.DisplayNameFor(model =>model.AvailableBeforeSemester)</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            <p id="availability">@Html.DisplayFor(model =>model.AvailableBeforeSemester)</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="utah-semesters" class="form-label">@Html.DisplayNameFor(model=>model.SemestersCompleted)</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            <p id="utah-semesters">@Html.DisplayFor(model=>model.SemestersCompleted)</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="personal-statement" class="form-label">@Html.DisplayNameFor(model=>model.PersonalStatement)</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            <p id="personal-statement">@Html.DisplayFor(model=>model.PersonalStatement)</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="previous-university" class="form-label">@Html.DisplayNameFor(model=>model.TransferSchool)</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            <p id="previous-university">@Html.DisplayFor(model=>model.TransferSchool)</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="linkedin" class="form-label">@Html.DisplayNameFor(model=>model.LinkedIn)</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            <a href="@Html.ValueFor(model=>model.LinkedIn)" target="_blank">@Html.DisplayFor(model=>model.LinkedIn)</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="resume-label" class="form-label">@Html.DisplayNameFor(model=>model.ResumeName)</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            @if (Model.ResumeName != null)
-                            {
-                                string path = "/uploads/" + Model.ResumeName;
-                                <a href=@path> Resume </a>
-                                if (canEdit)
-                                {
-                                    <form method="post"
-                                      enctype="multipart/form-data"
-                                      asp-controller="Applications"
-                                      asp-action="FileUpload">
-                                        <input type="file" name="files" multiple />
-                                        <input type="submit" value="Replace PDF Resume" />
-                                        <input hidden name="category" value="resume" />
-                                        <input hidden name="appID" value="@Model.Id" />
-                                    </form>
-                                 }
-                            }
-                            else
-                            {
-                                if(canEdit)
-                                {
-                                    <form method="post"
-                                      enctype="multipart/form-data"
-                                      asp-controller="Applications"
-                                      asp-action="FileUpload">
-                                        <input type="file" name="files" multiple />
-                                        <input type="submit" value="Upload PDF Resume" />
-                                        <input hidden name="category" value="resume" />
-                                        <input hidden name="appID" value="@Model.Id" />
-                                    </form>
-                                }
-                            }
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-5 prompt-label">
-                            <label for="resume-label" class="form-label">@Html.DisplayNameFor(model=>model.ModificationDate)</label>
-                        </div>
-                        <div class="col-lg-7 data-field-col">
-                            <p id="resume">@Html.DisplayFor(model=>model.ModificationDate)</p>
-                        </div>
+                    <div class="col-lg-7 data-field-col">
+                        <p id="pos-sought">Senior TA</p>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="degree-pursuing" class="form-label">@Html.DisplayFor(model => model.DegreePursuing)</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        <p id="degree-pursuing">@Html.DisplayFor(model => model.DegreePursuing)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="degree-dept" class="form-label">@Html.DisplayNameFor(model => model.Department)</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        <p id="degree-dept">@Html.DisplayFor(model => model.Department)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="u-gpa" class="form-label">@Html.DisplayNameFor(model => model.GPA)</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        <p id="u-gpa">@Html.DisplayFor(model => model.GPA)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="max-weekly-hours" class="form-label">@Html.DisplayNameFor(model=>model.DesiredHours)</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        <p id="max-weekly-hours">@Html.DisplayFor(model=>model.DesiredHours)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="availability" class="form-label">@Html.DisplayNameFor(model =>model.AvailableBeforeSemester)</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        <p id="availability">@Html.DisplayFor(model =>model.AvailableBeforeSemester)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="utah-semesters" class="form-label">@Html.DisplayNameFor(model=>model.SemestersCompleted)</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        <p id="utah-semesters">@Html.DisplayFor(model=>model.SemestersCompleted)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="personal-statement" class="form-label">@Html.DisplayNameFor(model=>model.PersonalStatement)</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        <p id="personal-statement">@Html.DisplayFor(model=>model.PersonalStatement)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="previous-university" class="form-label">@Html.DisplayNameFor(model=>model.TransferSchool)</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        <p id="previous-university">@Html.DisplayFor(model=>model.TransferSchool)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="linkedin" class="form-label">@Html.DisplayNameFor(model=>model.LinkedIn)</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        <a href="@Html.ValueFor(model=>model.LinkedIn)" target="_blank">@Html.DisplayFor(model=>model.LinkedIn)</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="resume-label" class="form-label">@Html.DisplayNameFor(model=>model.ResumeName)</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        @if (Model.ResumeName != null)
+                        {
+                            string path = "/uploads/" + Model.ResumeName;
+                            <a href=@path> Resume </a>
+                            if (canEdit)
+                            {
+                                <form method="post"
+                              enctype="multipart/form-data"
+                              asp-controller="Applications"
+                              asp-action="FileUpload">
+                                    <input type="file" name="files" multiple />
+                                    <input type="submit" value="Replace PDF Resume" />
+                                    <input hidden name="category" value="resume" />
+                                    <input hidden name="appID" value="@Model.Id" />
+                                </form>
+                            }
+                        }
+                        else
+                        {
+                            if (canEdit)
+                            {
+                                <form method="post"
+                              enctype="multipart/form-data"
+                              asp-controller="Applications"
+                              asp-action="FileUpload">
+                                    <input type="file" name="files" multiple />
+                                    <input type="submit" value="Upload PDF Resume" />
+                                    <input hidden name="category" value="resume" />
+                                    <input hidden name="appID" value="@Model.Id" />
+                                </form>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="resume-label" class="form-label">@Html.DisplayNameFor(model=>model.ModificationDate)</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        <p id="resume">@Html.DisplayFor(model=>model.ModificationDate)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 prompt-label">
+                        <label for="availability-label" class="form-label">Total Time Available</label>
+                    </div>
+                    <div class="col-lg-7 data-field-col">
+                        <p id="availability-data"></p>
+                        <a asp-controller="Availabilities" asp-action="Index">To Availability</a>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "/Availabilities/GetSchedule",
+            data: {
+                userid: '@UserManager.GetUserId(User)'
+            },
+            success: function (data) {
+                let x = 100;
+                let slots = data;
+                let days = [slots.Monday, slots.Tuesday, slots.Wednesday, slots.Thursday, slots.Friday];
+                let totalTime = 0;
+                //Draw slots
+                for (let i = 0; i < 5; i++) {
+                    for (let j = 0; j < 48; j++) {
+                        if (days[i].charAt(j) == '1') {
+                            totalTime += 15;
+                        }
+                    }
+
+                }
+                console.log(totalTime);
+                document.getElementById("availability-data").innerHTML = totalTime / 60 + " hours";
+            },
+            error: function (data) {
+                alert("error");
+            }
+        });
+
+
+
+
+    });
+</script>
 
 <p class="text-red">
     @ViewData["ErrorMessage"]
@@ -248,7 +295,7 @@ This file contains the HTML for the Application Details Page which displays an a
 
 <hr />
 <div class="center">
-    
+
     <div class="padding">
         <p>Last Modified:</p>
         <p id="last-modified">@Html.DisplayFor(model=>model.ModificationDate)</p>
@@ -261,10 +308,10 @@ This file contains the HTML for the Application Details Page which displays an a
         <div class="padding">
             <a class="btn btn-danger btn-md" asp-action="Delete" asp-route-id="@Model?.Id">Delete</a>
         </div>
-    }   
-    
+    }
 
-    @if (User.IsInRole("Professor")|| User.IsInRole("Admin"))
+
+    @if (User.IsInRole("Professor") || User.IsInRole("Admin"))
     {
         <a class="btn btn-danger btn-md" asp-action="List" asp-route-id="@Model?.Id">Back to List</a>
     }

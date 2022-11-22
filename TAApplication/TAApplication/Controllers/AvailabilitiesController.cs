@@ -28,7 +28,7 @@ namespace TAApplication.Controllers
         }
 
         // GET: Availabilities
-
+        [Authorize (Roles = "Applicant")]
         public async Task<IActionResult> Index()
         {
             return await Task.FromResult(View());

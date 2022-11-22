@@ -127,3 +127,4 @@ function Save_Availability(userId) {
             spinner.hidden = true;
         });
 }
+
