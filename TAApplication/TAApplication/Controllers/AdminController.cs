@@ -19,8 +19,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
+using System;
+using System.Data;
 using System.Diagnostics;
 using TAApplication.Areas.Data;
+using TAApplication.Data;
 using TAApplication.Models;
 
 
@@ -32,11 +36,13 @@ namespace TAApplication.Controllers
         private readonly ILogger<AdminController> _logger;
         UserManager<TAUser> _um;
         RoleManager<IdentityRole> _rm;
-        public AdminController(ILogger<AdminController> logger, UserManager<TAUser> um, RoleManager<IdentityRole> rm)
+        private ApplicationDbContext _context;
+        public AdminController(ILogger<AdminController> logger, UserManager<TAUser> um, RoleManager<IdentityRole> rm, ApplicationDbContext DB)
         {
             _logger = logger;
             _um = um;
             _rm = rm;
+            _context = DB;
         }
 
         /// <summary>
@@ -45,6 +51,16 @@ namespace TAApplication.Controllers
         /// <returns></returns>
         [Authorize(Roles = "Admin")]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Returns the View enrollment trends page
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles = "Admin")]
+        public IActionResult EnrollmentTrends()
         {
             return View();
         }
@@ -83,7 +99,18 @@ namespace TAApplication.Controllers
             return NotFound(new { success = false, message = "Could not change"+ user.Name +" to " + role});
         }
 
-
+        [HttpGet]
+        public string GetEnrollmentData(string start, string end, string dept, string number)
+        {
+            var query = from e in _context.Enrollments
+                        where e.Course == dept + number && (e.LastUpdated >= DateTime.Parse(start) && e.LastUpdated <= DateTime.Parse(end))
+                        select e;
+            if(query.Any())
+            {
+                return query.ToList().ToJson();
+            }
+            return "";
+        }
 
     }
 }
