@@ -14,6 +14,7 @@
  *      This File contains the seeding of the database.
  */
 
+using System.Linq.Expressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -21,6 +22,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using TAApplication.Areas.Data;
 using TAApplication.Models;
+using static System.Net.Mime.MediaTypeNames;
+using Application = TAApplication.Models.Application;
 
 namespace TAApplication.Data
 {
@@ -30,6 +33,8 @@ namespace TAApplication.Data
         public DbSet<Application> Applications { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Availability> Availabilities { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
             IHttpContextAccessor http)
@@ -44,6 +49,7 @@ namespace TAApplication.Data
             modelBuilder.Entity<Application>().ToTable("Applications");
             modelBuilder.Entity<Availability>().ToTable("Availabilities");
             modelBuilder.Entity<Course>().ToTable("Courses");
+            modelBuilder.Entity<Enrollment>().ToTable("Enrollments");
         }
 
         /// <summary>
@@ -336,6 +342,38 @@ namespace TAApplication.Data
                 Availabilities.Add(a);
                 await SaveChangesAsync();
             }
+        }
+
+        public async Task InitEnrollments()
+        {
+            if (Enrollments.Count() == 0)
+            {
+                using (var reader = new StreamReader("../TAApplication/wwwroot/temp.csv"))
+                {
+                    string? line = reader.ReadLine();
+                    string[] dates = line.Split(',');
+                    line = reader.ReadLine();
+                    while (line != null)
+                    {
+                        string[] vals = line.Split(',');
+                        for (int i = 1; i < vals.Length; i++)
+                        {
+                            Enrollment e = new Enrollment()
+                            {
+                                Course = vals[0],
+                                LastUpdated = DateTime.Parse(dates[i]),
+                                TotalEnrollment = int.Parse(vals[i])
+                            };
+                            Enrollments.Add(e);
+                            await SaveChangesAsync();
+                        }
+
+                        line = reader.ReadLine();
+                    }
+                }
+            }
+            
+            
         }
 
         /// <summary>
