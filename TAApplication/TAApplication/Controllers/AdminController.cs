@@ -103,7 +103,8 @@ namespace TAApplication.Controllers
         public string GetEnrollmentData(string start, string end, string dept, string number)
         {
             var query = from e in _context.Enrollments
-                        where e.Course == dept + number && (e.LastUpdated >= DateTime.Parse(start) && e.LastUpdated <= DateTime.Parse(end))
+                        where e.Course == dept + " " + number && (e.LastUpdated >= DateTime.Parse(start) && e.LastUpdated <= DateTime.Parse(end))
+                        
                         select e;
             if(query.Any())
             {

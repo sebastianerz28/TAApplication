@@ -12,5 +12,7 @@ namespace TAApplication.Models
         public DateTime LastUpdated { get; set; }
         [Required]
         public int TotalEnrollment { get; set; }
+        //CS 2420
+        //CS2420
     }
 }
