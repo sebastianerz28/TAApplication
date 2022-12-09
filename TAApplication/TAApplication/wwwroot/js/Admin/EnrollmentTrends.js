@@ -70,10 +70,6 @@ var startDates = [];
 
 var earliest = null;
 
-function hideSpinner() {
-    
-}
-
 function pullValues() {
     spinner.hidden = false;
 
@@ -87,6 +83,61 @@ function pullValues() {
 }
 let spinner = document.getElementById("spinner");
 spinner.hidden = false;
+
+Highcharts.theme = {
+    colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572',
+        '#FF9655', '#FFF263', '#6AF9C4'],
+    chart: {
+        backgroundColor: '#6B6B6B',
+    },
+    title: {
+        style: {
+            color: '#ECECEC',
+            font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+        }
+    },
+    subtitle: {
+        style: {
+            color: '#666666',
+            font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+        }
+    },
+    legend: {
+        itemStyle: {
+            font: '9pt Trebuchet MS, Verdana, sans-serif',
+            color: '#D2D2D2'
+        },
+        itemHoverStyle: {
+            color: 'white'
+        }
+    },
+    xAxis: {
+        labels: {
+            style: {
+                color: '#ECECEC'
+            }
+        },
+        title: {
+            style: {
+                color: '#ECECEC'
+            }
+        }
+    },
+    yAxis: {
+        labels: {
+            style: {
+                color: '#ECECEC'
+            }
+        },
+        title: {
+            style: {
+                color: '#ECECEC'
+            }
+        }
+    }
+};
+// Apply the theme
+Highcharts.setOptions(Highcharts.theme);
 
 var chart = new Highcharts.chart('container',
     {
@@ -151,4 +202,6 @@ var chart = new Highcharts.chart('container',
         }
 
     });
+
+
 spinner.hidden = true;
