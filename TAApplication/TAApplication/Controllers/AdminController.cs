@@ -13,7 +13,9 @@
  * File Contents
  *
  *  This file serves as the controller for admins currently (9/27/2022) allowing them to add/remove roles.
- *    
+ *
+ *  This file now allows users to query enrollment trends (12/9/2022)
+ *
  */
 
 using Microsoft.AspNetCore.Authorization;
@@ -98,7 +100,14 @@ namespace TAApplication.Controllers
 
             return NotFound(new { success = false, message = "Could not change"+ user.Name +" to " + role});
         }
-
+        /// <summary>
+        /// Gets the Enrollment Data for a given course
+        /// </summary>
+        /// <param name="start">Start Date</param>
+        /// <param name="end">End Date</param>
+        /// <param name="dept">Course Department</param>
+        /// <param name="number">Course Number</param>
+        /// <returns>JSON containing all course info</returns>
         [HttpPost]
         public string GetEnrollmentData(string start, string end, string dept, string number)
         {
