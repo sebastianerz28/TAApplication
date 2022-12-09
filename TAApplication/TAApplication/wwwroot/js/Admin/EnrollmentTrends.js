@@ -23,110 +23,132 @@ function Change_Role(user_id, role) {
                 role: role,
             }
         })
-        .done(function (data) {
+        .done(function(data) {
             console.log("Sample of data:", data);
         });
 }
 
 function GetEnrollmentData(start, end, dept, number) {
-    $.get(
+    
+    spinner.hidden = false;
+    $.post(
         {
             url: "/Admin/GetEnrollmentData",
             data: {
                 start: start,
                 end: end,
                 dept: dept,
-                number, number
+                number: number
             }
         })
-        .done(function (data) {
-            console.log("Sample of data:", data);
+        .done(function(data) {
+            const d = JSON.parse(data);
+            let points = [];
+            for (let i = 0; i < d.list.length; i++) {
+                points.push(d.list[i].TotalEnrollment);
+            }
+            console.log(points);
 
+            let date = d.list[0].LastUpdated;
+            startDates.push(date);
+            chart.addSeries({
+                name: d.list[0].Course,
+                data: points
+
+            });
+            for (let i = 0; i < startDates.length; i++) {
+                chart.series[i].update({
+                    pointStart: Date.UTC(parseInt(startDates[i].substring(0, 4)), parseInt(startDates[i].substring(5, 7)) - 1, parseInt(startDates[i].substring(8, 10)))
+                });
+            }
+            spinner.hidden = true;
         });
+    
 }
+
+var startDates = [];
+
+var earliest = null;
+
+function hideSpinner() {
+    
+}
+
 function pullValues() {
+    spinner.hidden = false;
+
+
     var start = document.getElementById("start-date").value;
     var end = document.getElementById("end-date").value;
     var course = document.getElementById("course-name").value;
     var deptNum = course.split(" ")
-    GetEnrollmentData(start, end, deptNum[0], deptNum[1]);
+    var data = GetEnrollmentData(start, end, deptNum[0], deptNum[1]);
+    console.log(data);
 }
+let spinner = document.getElementById("spinner");
+spinner.hidden = false;
 
-
-Highcharts.chart('container', {
-
-    title: {
-        text: 'U.S Solar Employment Growth by Job Category, 2010-2020',
-        align: 'left'
-    },
-
-    subtitle: {
-        text: 'Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>',
-        align: 'left'
-    },
-
-    yAxis: {
+var chart = new Highcharts.chart('container',
+    {
         title: {
-            text: 'Number of Employees'
-        }
-    },
+            text: 'Course Enrollment Trends',
+            align: 'left'
+        },
 
-    xAxis: {
-        accessibility: {
-            rangeDescription: 'Range: 2010 to 2020'
-        }
-    },
 
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle'
-    },
-
-    plotOptions: {
-        series: {
-            label: {
-                connectorAllowed: false
-            },
-            pointStart: 2010
-        }
-    },
-
-    series: [{
-        name: 'Installation & Developers',
-        data: [43934, 48656, 65165, 81827, 112143, 142383,
-            171533, 165174, 155157, 161454, 154610]
-    }, {
-        name: 'Manufacturing',
-        data: [24916, 37941, 29742, 29851, 32490, 30282,
-            38121, 36885, 33726, 34243, 31050]
-    }, {
-        name: 'Sales & Distribution',
-        data: [11744, 30000, 16005, 19771, 20185, 24377,
-            32147, 30912, 29243, 29213, 25663]
-    }, {
-        name: 'Operations & Maintenance',
-        data: [null, null, null, null, null, null, null,
-            null, 11164, 11218, 10077]
-    }, {
-        name: 'Other',
-        data: [21908, 5548, 8105, 11248, 8989, 11816, 18274,
-            17300, 13053, 11906, 10073]
-    }],
-
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
-            },
-            chartOptions: {
-                legend: {
-                    layout: 'horizontal',
-                    align: 'center',
-                    verticalAlign: 'bottom'
-                }
+        yAxis: {
+            title: {
+                text: 'Number of Students'
             }
-        }]
-    }
+        },
 
-});
+        xAxis: {
+            title: {
+                text: 'Time'
+            },
+            accessibility: {
+                rangeDescription: 'Range: Nov 1 - Nov 30'
+            },
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                day: '%d %b %Y' //ex- 01 Jan 2016
+            }
+        },
+
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        plotOptions: {
+            series: {
+                label: {
+                    connectorAllowed: false
+                },
+                pointStart: Date.UTC(2022, 10, 1),
+                pointInterval: 24 * 3600 * 1000
+            }
+        },
+
+        series: [],
+
+        responsive: {
+            rules: [
+                {
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }
+            ]
+        }
+
+    });
+spinner.hidden = true;

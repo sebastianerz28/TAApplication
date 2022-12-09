@@ -99,16 +99,22 @@ namespace TAApplication.Controllers
             return NotFound(new { success = false, message = "Could not change"+ user.Name +" to " + role});
         }
 
-        [HttpGet]
+        [HttpPost]
         public string GetEnrollmentData(string start, string end, string dept, string number)
         {
             var query = from e in _context.Enrollments
                         where e.Course == dept + " " + number && (e.LastUpdated >= DateTime.Parse(start) && e.LastUpdated <= DateTime.Parse(end))
-                        
+                        orderby e.LastUpdated
                         select e;
-            if(query.Any())
+
+            //var diff = DateTime.Parse(start) - DateTime.Parse("2022-11-01");
+            
+            if (query.Any())
             {
-                return query.ToList().ToJson();
+                var diffStart = (query.First().LastUpdated - DateTime.Parse(start)).Days;
+                var diffEnd = Math.Abs((query.Last().LastUpdated - DateTime.Parse(end)).Days);
+                var list = query.ToList();
+                return new {diffStart, diffEnd, list}.ToJson();
             }
             return "";
         }
