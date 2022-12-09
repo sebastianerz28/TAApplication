@@ -19,30 +19,44 @@ This file is the view for enrollment trends
 @inject ApplicationDbContext _context
 @{
     ViewData["Title"] = "EnrollmentTrends";
+    ViewData["BackgroundColor"] = "dark-mode";
 }
+<h1 class="center">Enrollment Trends</h1>
+<hr />
 @{
     var query = from e in _context.Enrollments
         orderby e.Course
         select e.Course;
     var distinct = query.Distinct().ToList();
 }
-<form style="margin-top: 10px">
-    <label >Start Date:</label>
-    <input id="start-date" value="2022-11-15" type="date" />
-    <label>End Date:</label>
-    <input id="end-date" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
-    <label>Course</label>
-    <select id="course-name">
-        @foreach (string item in distinct)
-        {
-            <option value="@item">
-                @item 
-            </option>
-        }
-    </select>
-    @*<input type="select" />*@
-</form>
-    <button class="btn btn-primary" onclick="pullValues()">Search</button>
+<div class="">
+    <div class="row-cols-1">
+        <form style="margin-top: 10px">
+            <div class="center-row">
+            <label >Start Date:</label>
+            <input id="start-date" value="2022-11-15" type="date" />
+            <label>End Date:</label>
+            <input id="end-date" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+            <label>Course</label>
+            <select id="course-name">
+                @foreach (string item in distinct)
+                {
+                    <option value="@item">
+                        @item 
+                    </option>
+                }
+            </select>
+            @*<input type="select" />*@
+
+            </div>
+            
+        </form>
+        <div class="center-row">
+            <button class="btn btn-primary btn-md" onclick="pullValues()">Search</button>
+        </div>
+    </div>
+    
+</div>
 
 
 
