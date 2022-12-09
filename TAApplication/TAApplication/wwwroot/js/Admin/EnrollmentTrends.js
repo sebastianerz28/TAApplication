@@ -1,7 +1,7 @@
 ﻿/**
  * Author:    Sebastian Ramirez
  * Partner:   Noah Carlson
- * Date:      09/27/2022
+ * Date:      12/9/2022
  * Course:    CS 4540, University of Utah, School of Computing
  * Copyright: CS 4540 and [Noah Carlson/Sebastian Ramirez] - This work may not be copied for use in Academic Coursework.
  *
@@ -11,23 +11,13 @@
  * the appropriate method header.
  *
  * File Contents
- *      This File contains the java script for the role changing functionality of the User roles page.
+ *      This File contains the java script for the enrollment trends page.
  */
+var startDates = [];
+var earliest = null;
 
-function Change_Role(user_id, role) {
-    $.post(
-        {
-            url: "/Admin/Change_Role",
-            data: {
-                user_id: user_id,
-                role: role,
-            }
-        })
-        .done(function(data) {
-            console.log("Sample of data:", data);
-        });
-}
 
+//This function makes an ajax call to the controller requesting enrollment data for the specified constraints
 function GetEnrollmentData(start, end, dept, number) {
     
     spinner.hidden = false;
@@ -66,10 +56,7 @@ function GetEnrollmentData(start, end, dept, number) {
     
 }
 
-var startDates = [];
-
-var earliest = null;
-
+// This function grabs all the information from the webpage to pass into GetEnrollmentData
 function pullValues() {
     spinner.hidden = false;
 
@@ -84,6 +71,7 @@ function pullValues() {
 let spinner = document.getElementById("spinner");
 spinner.hidden = false;
 
+//Sets up the dark mode theme for the chart
 Highcharts.theme = {
     colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572',
         '#FF9655', '#FFF263', '#6AF9C4'],
@@ -139,6 +127,7 @@ Highcharts.theme = {
 // Apply the theme
 Highcharts.setOptions(Highcharts.theme);
 
+//Creates a new Highchart
 var chart = new Highcharts.chart('container',
     {
         title: {
