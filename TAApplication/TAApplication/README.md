@@ -28,7 +28,9 @@ We use date inputs instead of a text input to grab the start and end dates.
 
 # Above and Beyond
 
-For our above and beyond we implemented a dark mode for the web page as well as uploaded our website to AWS.
+For our above and beyond we implemented a dark mode for the web page as well as uploaded our website to AWS. Our AWS instances are named PS9 and
+Noah Carlson - 
+Sebastian Ramirez - 
 
 # Consulted Peers:
 
